@@ -117,16 +117,11 @@ class FrequencyStatus(DiagnosticTask):
             else:
                 stat.summary(0, "Desired frequency met")
 
-            stat.add("Events in window", "%d" % events)
-            stat.add("Events since startup", "%d" % self.count)
-            stat.add("Duration of window (s)", "%f" % window)
-            stat.add("Actual frequency (Hz)", "%f" % freq)
+            stat.add("Events", "%d over %gs | %d since startup" % (events, window, self.count))
             if self.params.freq_bound.has_key('max') and self.params.freq_bound['min'] == self.params.freq_bound['max']:
-                stat.add("Target frequency (Hz)", "%f" % self.params.freq_bound['min'])
-            if self.params.freq_bound['min'] > 0:
-                stat.add("Minimum acceptable frequency (Hz)", "%f" % (self.params.freq_bound['min'] * (1 - self.params.tolerance)))
-            if self.params.freq_bound.has_key('max'):
-                stat.add("Maximum acceptable frequency (Hz)", "%f" % (self.params.freq_bound['max'] * (1 + self.params.tolerance)))
+                stat.add("Frequency (Hz)", "%g (%g~%g%%)" % (freq, self.params.freq_bound['min'], self.params.tolerance * 100))
+            else:
+                stat.add("Frequency (Hz)", "%g (%g-%g)" % (freq, self.params.freq_bound['min'], self.params.freq_bound.get('max', float('Inf'))))
 
         return stat
 

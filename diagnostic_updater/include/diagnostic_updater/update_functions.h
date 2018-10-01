@@ -193,18 +193,11 @@ namespace diagnostic_updater
           stat.summary(0, "Desired frequency met");
         }
 
-        stat.addf("Events in window", "%d", events);
-        stat.addf("Events since startup", "%d", count_);
-        stat.addf("Duration of window (s)", "%f", window);
-        stat.addf("Actual frequency (Hz)", "%f",freq);
+        stat.addf("Events", "%d over %gs | %d since startup", events, window, count_);
         if (*params_.min_freq_ == *params_.max_freq_)
-          stat.addf("Target frequency (Hz)", "%f",*params_.min_freq_);
-        if (*params_.min_freq_ > 0)
-          stat.addf("Minimum acceptable frequency (Hz)", "%f",
-              *params_.min_freq_ * (1 - params_.tolerance_));
-        if (finite(*params_.max_freq_))
-          stat.addf("Maximum acceptable frequency (Hz)", "%f",
-              *params_.max_freq_ * (1 + params_.tolerance_));
+          stat.addf("Frequency (Hz)", "%g (%g~%g%%)", freq, *params_.min_freq_, params_.tolerance_ * 100);
+        else
+          stat.addf("Frequency (Hz)", "%g (%g-%g)", freq, *params_.min_freq_, *params_.min_freq_ * (1 - params_.tolerance_), *params_.max_freq_ * (1 + params_.tolerance_));
       }
   };
 
