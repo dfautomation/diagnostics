@@ -199,13 +199,10 @@ class TimeStampStatus(DiagnosticTask):
                     stat.summary(2, "Zero timestamp seen.")
                     self.zero_count += 1
 
-            stat.add("Earliest timestamp delay:", "%f" % self.min_delta)
-            stat.add("Latest timestamp delay:", "%f" % self.max_delta)
-            stat.add("Earliest acceptable timestamp delay:", "%f" % self.params.min_acceptable)
-            stat.add("Latest acceptable timestamp delay:", "%f" % self.params.max_acceptable)
-            stat.add("Late diagnostic update count:", "%i" % self.late_count)
-            stat.add("Early diagnostic update count:", "%i" % self.early_count)
-            stat.add("Zero seen diagnostic update count:", "%i" % self.zero_count)
+            stat.add("Timestamp delay - Earliest | Latest | Acceptable", "%g | %g | %g-%g" % (
+                self.min_delta, self.max_delta, self.params.min_acceptable, self.params.max_acceptable))
+            stat.add("Late | Early | Zero Seen count:", "%i | %i | %i" % (
+                self.late_count, self.early_count, self.zero_count))
 
             self.deltas_valid = False
             self.min_delta = 0
