@@ -2,6 +2,20 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Compress the diagnostic entries from TimeStampStatus.
+* Compress the diagnostic entries from FrequencyStatus.
+* Merge pull request `#86 <https://github.com/dfautomation/diagnostics/issues/86>`_ from icolwell/diagnostic_status_custom_names
+  Custom names for FrequencyStatus and TimeStampStatus
+* Remove C++11 features
+* Wording
+* Custom names for existing diagnostics tasks
+* Merge pull request `#84 <https://github.com/dfautomation/diagnostics/issues/84>`_ from nbussas/frequency_status_name
+  Make FrequencyStatus' name configurable
+* Make FrequencyStatus' name configurable
+* Contributors: Austin, Ian Colwell, Nils Bussas, Patrick Chin
+
 1.9.3 (2018-05-02)
 ------------------
 * Merge pull request `#73 <https://github.com/ros/diagnostics/issues/73>`_ from tue-robotics/indigo-devel
