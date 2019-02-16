@@ -2,8 +2,8 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.4 (2019-02-17)
+------------------
 * Compress the diagnostic entries from TimeStampStatus.
 * Compress the diagnostic entries from FrequencyStatus.
 * Merge pull request `#86 <https://github.com/dfautomation/diagnostics/issues/86>`_ from icolwell/diagnostic_status_custom_names
