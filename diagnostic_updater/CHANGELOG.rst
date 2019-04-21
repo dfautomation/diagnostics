@@ -13,7 +13,6 @@ Changelog for package diagnostic_updater
 * Custom names for existing diagnostics tasks
 * Merge pull request `#84 <https://github.com/dfautomation/diagnostics/issues/84>`_ from nbussas/frequency_status_name
   Make FrequencyStatus' name configurable
-* Make FrequencyStatus' name configurable
 * Contributors: Austin, Ian Colwell, Nils Bussas, Patrick Chin
 
 1.9.3 (2018-05-02)
