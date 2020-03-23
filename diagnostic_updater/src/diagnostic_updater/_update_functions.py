@@ -121,7 +121,9 @@ class FrequencyStatus(DiagnosticTask):
             if self.params.freq_bound.has_key('max') and self.params.freq_bound['min'] == self.params.freq_bound['max']:
                 stat.add("Frequency (Hz)", "%g (%g~%g%%)" % (freq, self.params.freq_bound['min'], self.params.tolerance * 100))
             else:
-                stat.add("Frequency (Hz)", "%g (%g-%g)" % (freq, self.params.freq_bound['min'], self.params.freq_bound.get('max', float('Inf'))))
+                stat.add("Frequency (Hz)", "%g (%g-%g)" % (freq,
+                    self.params.freq_bound['min'] * (1 - self.params.tolerance),
+                    self.params.freq_bound.get('max', float('Inf')) * (1 + self.params.tolerance)))
 
         return stat
 
