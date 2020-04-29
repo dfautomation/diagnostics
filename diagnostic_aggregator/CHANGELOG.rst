@@ -2,8 +2,8 @@
 Changelog for package diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.5 (2020-04-30)
+------------------
 * Merge pull request `#99 <https://github.com/ros/diagnostics/issues/99>`_ from g-gemignani/indigo-devel
   Fix discard_stale (Closes `#65 <https://github.com/ros/diagnostics/issues/65>`_)
 * Merge pull request `#96 <https://github.com/ros/diagnostics/issues/96>`_ from kejxu/use_global_gtest_library
