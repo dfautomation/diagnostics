@@ -2,16 +2,30 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix diagnostic entries for FrequencyStatus (Python).
+* Merge pull request `#105 <https://github.com/ros/diagnostics/issues/105>`_ from mikepurvis/py3-httplib
+  Fix httplib import for Python 3.
+* Fix httplib import for Python 3.
+* Merge pull request `#97 <https://github.com/ros/diagnostics/issues/97>`_ from kejxu/fix_windows_build_issue
+  fix windows build issue
+* Merge branch 'indigo-devel' into fix_windows_build_issue
+* update windows bringup (`#5 <https://github.com/ros/diagnostics/issues/5>`_)
+* avoid ERROR from windows.h
+* windows bringup
+* Contributors: Austin, James Xu, Mike Purvis, Patrick Chin, Sean Yen
+
 1.9.4 (2019-02-17)
 ------------------
 * Compress the diagnostic entries from TimeStampStatus.
 * Compress the diagnostic entries from FrequencyStatus.
-* Merge pull request `#86 <https://github.com/dfautomation/diagnostics/issues/86>`_ from icolwell/diagnostic_status_custom_names
+* Merge pull request `#86 <https://github.com/ros/diagnostics/issues/86>`_ from icolwell/diagnostic_status_custom_names
   Custom names for FrequencyStatus and TimeStampStatus
 * Remove C++11 features
 * Wording
 * Custom names for existing diagnostics tasks
-* Merge pull request `#84 <https://github.com/dfautomation/diagnostics/issues/84>`_ from nbussas/frequency_status_name
+* Merge pull request `#84 <https://github.com/ros/diagnostics/issues/84>`_ from nbussas/frequency_status_name
   Make FrequencyStatus' name configurable
 * Contributors: Austin, Ian Colwell, Nils Bussas, Patrick Chin
 
