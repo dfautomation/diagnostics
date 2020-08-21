@@ -246,8 +246,22 @@ class Updater(DiagnosticTaskVector):
         has been exceeded.
         """
         self._check_diagnostic_period()
-        if rospy.Time.now() >= self.last_time + rospy.Duration(self.period):
-            self.force_update()
+        curr_time = rospy.Time.now()
+        period = rospy.Duration(self.period)
+
+        # detect backward jump in time
+        if curr_time < self.last_time:
+            self.last_time = curr_time
+
+        if curr_time >= self.last_time + period:
+            self.last_time = self.last_time + period
+
+            # detect time jumping forwards, as well as loops that are
+            # inherently too slow
+            if curr_time > self.last_time + period:
+                self.last_time = curr_time
+
+            self._internal_update()
 
     def force_update(self):
         """Forces the diagnostics to update.
@@ -256,7 +270,9 @@ class Updater(DiagnosticTaskVector):
         published immediately.
         """
         self.last_time = rospy.Time.now()
+        self._internal_update()
 
+    def _internal_update(self):
         warn_nohwid = len(self.hwid)==0
 
         status_vec = []

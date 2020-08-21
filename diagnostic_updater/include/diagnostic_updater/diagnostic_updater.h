@@ -381,13 +381,26 @@ namespace diagnostic_updater
        */
       void update()
       {
+        update_diagnostic_period();
         ros::Time now_time = ros::Time::now();
-        if (now_time < next_time_) {
-          // @todo put this back in after fix of #2157 update_diagnostic_period(); // Will be checked in force_update otherwise.
-          return;
+        ros::Duration period = ros::Duration(period_);
+
+        // detect backward jump in time
+        if (now_time < last_time_) {
+          last_time_ = now_time;
         }
 
-        force_update();
+        if (now_time > last_time_ + period) {
+          last_time_ = last_time_ + period;
+
+          // detect time jumping forwards, as well as loops that are
+          // inherently too slow
+          if (now_time > last_time_ + period) {
+            last_time_ = now_time;
+          }
+
+          internal_update();
+        }
       }
 
       /**
@@ -398,10 +411,12 @@ namespace diagnostic_updater
        */
       void force_update()
       {
-        update_diagnostic_period();
+        last_time_ = ros::Time::now();
+        internal_update();
+      }
 
-        next_time_ = ros::Time::now() + ros::Duration().fromSec(period_);
-
+      void internal_update()
+      {
         if (node_handle_.ok())
         {
           bool warn_nohwid = hwid_.empty();
@@ -515,9 +530,7 @@ namespace diagnostic_updater
 
       void update_diagnostic_period()
       {
-        double old_period = period_;
         private_node_handle_.getParamCached("diagnostic_period", period_);
-        next_time_ += ros::Duration(period_ - old_period); // Update next_time_
       }
 
       /**
@@ -555,7 +568,7 @@ namespace diagnostic_updater
         publisher_ = node_handle_.advertise<diagnostic_msgs::DiagnosticArray>("/diagnostics", 1);
 
         period_ = 1.0;
-        next_time_ = ros::Time::now() + ros::Duration(period_);
+        last_time_ = ros::Time::now();
         update_diagnostic_period();
 
         verbose_ = false;
@@ -578,7 +591,7 @@ namespace diagnostic_updater
       ros::NodeHandle node_handle_;
       ros::Publisher publisher_;
 
-      ros::Time next_time_;
+      ros::Time last_time_;
 
       double period_;
       std::string hwid_;
