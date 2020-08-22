@@ -2,8 +2,8 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.6 (2020-08-22)
+------------------
 * Ensure more timely publishing of diagnostic update on each period.
 * Contributors: Patrick Chin
 

@@ -2,8 +2,8 @@
 Changelog for package diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.6 (2020-08-22)
+------------------
 * diagnostic_aggregator: Fixed flaky test.
   discard_stale_not_published_test.py had an initial wait for /diagnostics topic and a subsequent wait for stale agg messages. If, however, the initial wait for /diagnostics took longer (e.g. high CPU utilization), it decreased the amount of time left to wait for stale messages. The fix makes these wait times independent.
 * Contributors: Martin Pecka

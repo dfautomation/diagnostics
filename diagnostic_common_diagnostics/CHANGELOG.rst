@@ -2,8 +2,8 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.6 (2020-08-22)
+------------------
 * Add default window value to not break interfaces
 * Merge pull request `#152 <https://github.com/ros/diagnostics/issues/152>`_ from eurogroep/feat/cpu-monitor-window-averaging
 
