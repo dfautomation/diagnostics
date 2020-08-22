@@ -2,6 +2,11 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Ensure more timely publishing of diagnostic update on each period.
+* Contributors: Patrick Chin
+
 1.9.5 (2020-04-30)
 ------------------
 * Fix diagnostic entries for FrequencyStatus (Python).

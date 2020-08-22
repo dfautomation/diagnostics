@@ -2,6 +2,16 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add default window value to not break interfaces
+* Merge pull request `#152 <https://github.com/ros/diagnostics/issues/152>`_ from eurogroep/feat/cpu-monitor-window-averaging
+
+  * chore(cpu_monitor): Average check for empty list
+  * feat(cpu_monitor): Window averaging
+
+* Contributors: Guglielmo Gemignani, Rein Appeldoorn
+
 1.9.5 (2020-04-30)
 ------------------
 

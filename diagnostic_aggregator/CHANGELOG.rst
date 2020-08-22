@@ -2,6 +2,12 @@
 Changelog for package diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* diagnostic_aggregator: Fixed flaky test.
+  discard_stale_not_published_test.py had an initial wait for /diagnostics topic and a subsequent wait for stale agg messages. If, however, the initial wait for /diagnostics took longer (e.g. high CPU utilization), it decreased the amount of time left to wait for stale messages. The fix makes these wait times independent.
+* Contributors: Martin Pecka
+
 1.9.5 (2020-04-30)
 ------------------
 * Merge pull request `#99 <https://github.com/ros/diagnostics/issues/99>`_ from g-gemignani/indigo-devel
