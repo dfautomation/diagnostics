@@ -2,6 +2,9 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.9.7 (2020-09-03)
 ------------------
 * Fix shebang line for python3 (`#141 <https://github.com/ros/diagnostics/issues/141>`_)
