@@ -2,8 +2,8 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.9.8 (2020-10-19)
+------------------
 * Use get_param_cached in diagnostic_updater
 * Diagnostic status msg is not included but being used (`#163 <https://github.com/ros/diagnostics/issues/163>`_)
 * Change depends to catkin_depends for catkin packages (`#162 <https://github.com/ros/diagnostics/issues/162>`_)
