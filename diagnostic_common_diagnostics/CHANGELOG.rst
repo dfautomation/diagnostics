@@ -2,14 +2,15 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.9.7 (2020-09-03)
+------------------
+* Fix shebang line for python3 (`#141 <https://github.com/ros/diagnostics/issues/141>`_)
+* Contributors: Mikael Arguedas, gemignani
+
 1.9.6 (2020-08-22)
 ------------------
 * Add default window value to not break interfaces
-* Merge pull request `#152 <https://github.com/ros/diagnostics/issues/152>`_ from eurogroep/feat/cpu-monitor-window-averaging
-
-  * chore(cpu_monitor): Average check for empty list
-  * feat(cpu_monitor): Window averaging
-
+* Added feature of window averaging for cpu monitor
 * Contributors: Guglielmo Gemignani, Rein Appeldoorn
 
 1.9.5 (2020-04-30)

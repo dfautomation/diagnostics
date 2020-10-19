@@ -1,10 +1,10 @@
 <package>
   <name>diagnostic_common_diagnostics</name>
-  <version>1.9.6</version>
+  <version>1.9.7</version>
   <description>diagnostic_common_diagnostics</description>
   <author email="brice.rebsamen@gmail.com">Brice Rebsamen</author>
+  <maintainer email="guglielmo.gemignani@gmail.com">Guglielmo Gemignani</maintainer>
   <maintainer email="namniart@gmail.com">Austin Hendrix</maintainer>
-  <maintainer email="brice.rebsamen@gmail.com">Brice Rebsamen</maintainer>
 
   <license>BSD</license>
 

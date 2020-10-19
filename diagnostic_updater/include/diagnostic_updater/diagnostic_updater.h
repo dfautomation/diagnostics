@@ -43,6 +43,7 @@
 #include "ros/this_node.h"
 
 #include "diagnostic_msgs/DiagnosticArray.h"
+#include "diagnostic_msgs/DiagnosticStatus.h"
 #include "diagnostic_updater/DiagnosticStatusWrapper.h"
 
 #include <boost/thread.hpp>
@@ -599,6 +600,6 @@ namespace diagnostic_updater
       bool warn_nohwid_done_;
   };
 
-};
+}
 
 #endif

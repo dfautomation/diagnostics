@@ -2,6 +2,17 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.9.7 (2020-09-03)
+------------------
+* Estract TimestampStatus run to cpp
+* Add SlowTimeStampStatus (`#144 <https://github.com/ros/diagnostics/issues/144>`_)
+* Test build fix on Windows (`#8 <https://github.com/ros/diagnostics/issues/8>`_) (`#107 <https://github.com/ros/diagnostics/issues/107>`_)
+* Resolve div by zero in updater (`#108 <https://github.com/ros/diagnostics/issues/108>`_)
+* Use std::isfinite due to deprecation on osx (`#113 <https://github.com/ros/diagnostics/issues/113>`_)
+* Remove extra (not needed) trailing ':' (`#116 <https://github.com/ros/diagnostics/issues/116>`_)
+* Fix GCC warnings with -Wpedantic (`#124 <https://github.com/ros/diagnostics/issues/124>`_)
+* Contributors: Enrique Fernandez Perdomo, Guglielmo Gemignani, Jacob Perron, Sean Yen, Stephan Sundermann, William Hudgins, gemignani
+
 1.9.6 (2020-08-22)
 ------------------
 * Ensure more timely publishing of diagnostic update on each period.

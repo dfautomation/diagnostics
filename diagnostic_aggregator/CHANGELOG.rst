@@ -2,6 +2,12 @@
 Changelog for package diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.9.7 (2020-09-03)
+------------------
+* Extend initial connect timeout for add_analyzers (`#129 <https://github.com/ros/diagnostics/issues/129>`_)
+* Revert PR 99 to not break ABI
+* Contributors: Mike Purvis, gemignani
+
 1.9.6 (2020-08-22)
 ------------------
 * diagnostic_aggregator: Fixed flaky test.

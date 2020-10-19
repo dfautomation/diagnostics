@@ -38,6 +38,7 @@
 #define __DIAGNOSTIC_STATUS__UPDATE_FUNCTIONS_H__
 
 #include <diagnostic_updater/diagnostic_updater.h>
+#include "diagnostic_msgs/DiagnosticStatus.h"
 #include <math.h>
 
 namespace diagnostic_updater
@@ -171,26 +172,31 @@ namespace diagnostic_updater
         int curseq = count_;
         int events = curseq - seq_nums_[hist_indx_];
         double window = (curtime - times_[hist_indx_]).toSec();
-        double freq = events / window;
+        double freq = 0;
+
+        if (window != 0)
+        {
+            freq = events / window;
+        }
         seq_nums_[hist_indx_] = curseq;
         times_[hist_indx_] = curtime;
         hist_indx_ = (hist_indx_ + 1) % params_.window_size_;
 
         if (events == 0)
         {
-          stat.summary(2, "No events recorded.");
+          stat.summary(diagnostic_msgs::DiagnosticStatus::ERROR, "No events recorded.");
         }
-        else if (freq < *params_.min_freq_ * (1 - params_.tolerance_))
+        else if (window != 0 && freq < *params_.min_freq_ * (1 - params_.tolerance_))
         {
-          stat.summary(1, "Frequency too low.");
+          stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "Frequency too low.");
         }
-        else if (freq > *params_.max_freq_ * (1 + params_.tolerance_))
+        else if (window != 0 && freq > *params_.max_freq_ * (1 + params_.tolerance_))
         {
-          stat.summary(1, "Frequency too high.");
+          stat.summary(diagnostic_msgs::DiagnosticStatus::WARN, "Frequency too high.");
         }
-        else
+        else if (window != 0)
         {
-          stat.summary(0, "Desired frequency met");
+          stat.summary(diagnostic_msgs::DiagnosticStatus::OK, "Desired frequency met");
         }
 
         stat.addf("Events", "%d over %gs | %d since startup", events, window, count_);
@@ -227,7 +233,6 @@ namespace diagnostic_updater
      */
 
     double min_acceptable_;
-
   };
 
   /**
@@ -338,44 +343,7 @@ namespace diagnostic_updater
         tick(t.toSec());
       }
 
-      virtual void run(diagnostic_updater::DiagnosticStatusWrapper &stat)
-      {
-        boost::mutex::scoped_lock lock(lock_);
-
-        stat.summary(0, "Timestamps are reasonable.");
-        if (!deltas_valid_)
-        {
-          stat.summary(1, "No data since last update.");
-        }
-        else
-        {
-          if (min_delta_ < params_.min_acceptable_)
-          {
-            stat.summary(2, "Timestamps too far in future seen.");
-            early_count_++;
-          }
-
-          if (max_delta_ > params_.max_acceptable_)
-          {
-            stat.summary(2, "Timestamps too far in past seen.");
-            late_count_++;
-          }
-
-          if (zero_seen_)
-          {
-            stat.summary(2, "Zero timestamp seen.");
-            zero_count_++;
-          }
-        }
-
-        stat.addf("Timestamp delay - Earliest | Latest | Acceptable", "%g | %g | %g-%g", min_delta_, max_delta_, params_.min_acceptable_, params_.max_acceptable_);
-        stat.addf("Late | Early | Zero Seen count", "%i | %i | %i", late_count_, early_count_, zero_count_);
-
-        deltas_valid_ = false;
-        min_delta_ = 0;
-        max_delta_ = 0;
-        zero_seen_ = false;
-      }
+      virtual void run(diagnostic_updater::DiagnosticStatusWrapper &stat);
 
     private:
       TimeStampStatusParam params_;
@@ -387,6 +355,23 @@ namespace diagnostic_updater
       double min_delta_;
       bool deltas_valid_;
       boost::mutex lock_;
+  };
+
+  /**
+   * A TimeStampStatus task that doesn't report periods with no data as a warning. This comes handy if the diagnosed
+   * topic has lower frequency than the diagnostic period.
+   */
+  class SlowTimeStampStatus : public TimeStampStatus
+  {
+    public:
+      SlowTimeStampStatus(const TimeStampStatusParam& params, const std::string& name) : TimeStampStatus(params, name)
+      {}
+
+      SlowTimeStampStatus(const TimeStampStatusParam& params) : TimeStampStatus(params)
+      {}
+
+      SlowTimeStampStatus()
+      {}
   };
 
  /**
@@ -412,6 +397,6 @@ namespace diagnostic_updater
       stat.summary(0, "Alive");
     }
   };
-};
+}
 
 #endif
