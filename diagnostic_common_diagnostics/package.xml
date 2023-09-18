@@ -1,4 +1,5 @@
-<package>
+<?xml version="1.0"?>
+<package format="3">
   <name>diagnostic_common_diagnostics</name>
   <version>1.9.8</version>
   <description>diagnostic_common_diagnostics</description>
@@ -9,7 +10,6 @@
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/diagnostic_common_diagnostics</url>
-<!-- <url type="bugtracker"></url> -->
 
   <buildtool_depend>catkin</buildtool_depend>
 
@@ -17,15 +17,12 @@
   <build_depend>diagnostic_updater</build_depend>
   <build_depend>rostest</build_depend>
 
-  <run_depend>diagnostic_updater</run_depend>
-  <run_depend>hddtemp</run_depend>
-  <run_depend>rospy</run_depend>
-  <run_depend>tf</run_depend>
-  <run_depend>python-psutil</run_depend>
-
-  <!-- <test_depend>diagnostic_updater</test_depend> -->
-  <!-- <test_depend>rospy</test_depend> -->
-  <!-- <test_depend>tf</test_depend> -->
+  <exec_depend>diagnostic_updater</exec_depend>
+  <exec_depend>hddtemp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 2">python-psutil</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 3">python3-psutil</exec_depend>
 
   <export>
     <architecture_independent/>
