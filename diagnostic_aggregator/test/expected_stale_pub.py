@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Publishes messages for aggregator testing of expected items.
+# \brief Publishes messages for aggregator testing of expected items.
 
 PKG = 'diagnostic_aggregator'
 
@@ -49,9 +49,9 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 if __name__ == '__main__':
     rospy.init_node('diag_pub')
     pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
-    
+
     start_time = rospy.get_time()
-    
+
     while not rospy.is_shutdown():
         array = DiagnosticArray()
         array.status = [
@@ -59,15 +59,15 @@ if __name__ == '__main__':
             DiagnosticStatus(0, 'expected1', 'OK', '', []),
             DiagnosticStatus(1, 'expected2', 'OK', '', []),
             DiagnosticStatus(2, 'expected3', 'OK', '', []),
-            
+
             DiagnosticStatus(0, 'startswith1', 'OK', '', []),
             DiagnosticStatus(0, 'startswith2', 'OK', '', []),
             DiagnosticStatus(1, 'startswith3', 'OK', '', []),
-            
+
             # OtherAnalyzer for Other
             DiagnosticStatus(2, 'other2', 'OK', '', []),
             DiagnosticStatus(0, 'other3', 'OK', '', [])]
-        
+
         array.header.stamp = rospy.get_rostime()
 
         if rospy.get_time() - start_time < 5:
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             array.status.append(DiagnosticStatus(0, 'expected5', 'I will be stale', '', []))
 
             # Should disappear
-            array.status.append(DiagnosticStatus(2, 'other1', 'Error', '', [])) 
+            array.status.append(DiagnosticStatus(2, 'other1', 'Error', '', []))
 
         pub.publish(array)
         sleep(1)

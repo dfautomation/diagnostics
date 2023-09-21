@@ -32,9 +32,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-##\author Eric Berger, Kevin Watts
+# \author Eric Berger, Kevin Watts
 
-##\brief Converts diagnostics log files into CSV's for analysis
+# \brief Converts diagnostics log files into CSV's for analysis
 
 PKG = 'diagnostic_analysis'
 import roslib; roslib.load_manifest(PKG)
@@ -61,8 +61,8 @@ if __name__ == '__main__':
     try:
         for i, f in enumerate(args):
             filepath = 'output/%s_csv' % os.path.basename(f)[0:os.path.basename(f).find('.')]
-            
-            output_dir = os.path.join(options.directory,  filepath)
+
+            output_dir = os.path.join(options.directory, filepath)
             print("Processing file %s. File %d of %d." % (os.path.basename(f), i + 1, len(args)))
 
             exp = LogExporter(output_dir, f)
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             exporters.append(exp)
 
         print('Finished processing files.')
-    except:
+    except Exception:
         import traceback
         print("Caught exception processing log file")
         traceback.print_exc()

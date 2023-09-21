@@ -44,8 +44,7 @@ import rospy
 import diagnostic_updater as DIAG
 
 
-
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Copying from tfwtf.py begins here
 
 import time
@@ -53,6 +52,7 @@ import tf.msg
 
 # global list of messages received
 _msgs = []
+
 
 def rostime_delta(ctx):
     deltas = {}
@@ -65,12 +65,13 @@ def rostime_delta(ctx):
                     if abs(secs) > abs(deltas[callerid]):
                         deltas[callerid] = secs
                 else:
-                    deltas[callerid]  = secs
+                    deltas[callerid] = secs
 
     errors = []
     for k, v in deltas.items():
-        errors.append("receiving transform from [%s] that differed from ROS time by %ss"%(k, v))
+        errors.append("receiving transform from [%s] that differed from ROS time by %ss" % (k, v))
     return errors
+
 
 def reparenting(ctx):
     errors = []
@@ -80,13 +81,14 @@ def reparenting(ctx):
             frame_id = t.child_frame_id
             parent_id = t.header.frame_id
             if frame_id in parent_id_map and parent_id_map[frame_id] != parent_id:
-                msg = "reparenting of [%s] to [%s] by [%s]"%(frame_id, parent_id, callerid)
+                msg = "reparenting of [%s] to [%s] by [%s]" % (frame_id, parent_id, callerid)
                 parent_id_map[frame_id] = parent_id
                 if msg not in errors:
                     errors.append(msg)
             else:
                 parent_id_map[frame_id] = parent_id
     return errors
+
 
 def cycle_detection(ctx):
     max_depth = 100
@@ -110,11 +112,11 @@ def cycle_detection(ctx):
             except KeyError:
                 break
             if current_frame == frame:
-                errors.append("Frame %s is in a loop. It's loop has elements:\n%s"% (frame, " -> ".join(frame_list)))
+                errors.append("Frame %s is in a loop. It's loop has elements:\n%s" % (frame, " -> ".join(frame_list)))
                 break
 
-
     return errors
+
 
 def multiple_authority(ctx):
     errors = []
@@ -124,7 +126,7 @@ def multiple_authority(ctx):
             frame_id = t.child_frame_id
             parent_id = t.header.frame_id
             if frame_id in authority_map and authority_map[frame_id] != callerid:
-                msg = "node [%s] publishing transform [%s] with parent [%s] already published by node [%s]"%(callerid, frame_id, parent_id, authority_map[frame_id])
+                msg = "node [%s] publishing transform [%s] with parent [%s] already published by node [%s]" % (callerid, frame_id, parent_id, authority_map[frame_id])
                 authority_map[frame_id] = callerid
                 if msg not in errors:
                     errors.append(msg)
@@ -132,8 +134,10 @@ def multiple_authority(ctx):
                 authority_map[frame_id] = callerid
     return errors
 
+
 def no_msgs(ctx):
     return not _msgs
+
 
 # rospy subscriber callback for /tf
 def _tf_handle(msg):
@@ -141,7 +145,7 @@ def _tf_handle(msg):
 
 
 # Copying from tfwtf.py stops here
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 
 def make_diag_fn(fn, errlvl, errmsg, okmsg="OK"):
@@ -155,10 +159,10 @@ def make_diag_fn(fn, errlvl, errmsg, okmsg="OK"):
             if res:
                 stat.summary(errlvl, errmsg)
         elif isinstance(res, list):
-            if len(res)>0:
+            if len(res) > 0:
                 stat.summary(errlvl, errmsg)
-                for i,r in enumerate(res):
-                    stat.add("Error %d" % (i+1), r)
+                for i, r in enumerate(res):
+                    stat.add("Error %d" % (i + 1), r)
 
         return stat
 
@@ -170,11 +174,11 @@ rospy.init_node('tf_monitor')
 
 diag_updater = DIAG.Updater()
 diag_updater.setHardwareID('none')
-diag_updater.add('Messaging status', make_diag_fn(no_msgs, DIAG.WARN, 'No tf messages received') )
-diag_updater.add('Time status', make_diag_fn(rostime_delta, DIAG.WARN, 'Received out-of-date/future transforms') )
-diag_updater.add('Reparenting status', make_diag_fn(reparenting, DIAG.ERROR, 'TF re-parenting contention') )
-diag_updater.add('Cycle status', make_diag_fn(cycle_detection, DIAG.ERROR, 'TF cycle detection') )
-diag_updater.add('Multiple authority status', make_diag_fn(multiple_authority, DIAG.ERROR, 'TF multiple authority contention') )
+diag_updater.add('Messaging status', make_diag_fn(no_msgs, DIAG.WARN, 'No tf messages received'))
+diag_updater.add('Time status', make_diag_fn(rostime_delta, DIAG.WARN, 'Received out-of-date/future transforms'))
+diag_updater.add('Reparenting status', make_diag_fn(reparenting, DIAG.ERROR, 'TF re-parenting contention'))
+diag_updater.add('Cycle status', make_diag_fn(cycle_detection, DIAG.ERROR, 'TF cycle detection'))
+diag_updater.add('Multiple authority status', make_diag_fn(multiple_authority, DIAG.ERROR, 'TF multiple authority contention'))
 
 
 while not rospy.is_shutdown():

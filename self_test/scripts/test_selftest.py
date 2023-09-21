@@ -32,8 +32,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
-##\brief Tests for valid self test calls
+# \author Kevin Watts
+# \brief Tests for valid self test calls
 
 PKG = 'self_test'
 import roslib; roslib.load_manifest(PKG)
@@ -71,7 +71,6 @@ class TestSelfTest(unittest.TestCase):
         self.no_id = options.no_id
         self.expect_fail = options.expect_fail
         self.exception = options.exception
-        
 
     def test_self_test(self):
         proxy = rospy.ServiceProxy(SRV_NAME, SelfTest)
@@ -105,7 +104,6 @@ class TestSelfTest(unittest.TestCase):
 
             for tst in res.status:
                 self.assert_(tst.level == 0, "Self test subtest failed, but we marked it as a pass")
-                
 
         if self.exception:
             found_ex = False
@@ -115,6 +113,6 @@ class TestSelfTest(unittest.TestCase):
 
             self.assert_(found_ex, "Self test threw and exception, but we didn't catch it and report it")
 
-            
+
 if __name__ == '__main__':
     rostest.run(PKG, sys.argv[0], TestSelfTest, sys.argv)

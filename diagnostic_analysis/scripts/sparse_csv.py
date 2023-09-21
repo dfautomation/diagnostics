@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# 
+#
 # Software License Agreement (BSD License)
 #
 # Copyright (c) 2008, Willow Garage, Inc.
@@ -47,16 +47,16 @@ from optparse import OptionParser
 
 from diagnostic_analysis.sparse import make_sparse_skip, make_sparse_length
 
-if __name__=='__main__':
+if __name__ == '__main__':
     # Allow user to set output directory
     parser = OptionParser()
     parser.add_option("-l", "--length", dest="length",
                       help="Set length of output CSV", metavar="LEN",
                       default=None, action="store")
     parser.add_option("-s", "--skip", dest="skip",
-                      help="Skip every nth row. If length set, will ignore this value.", 
+                      help="Skip every nth row. If length set, will ignore this value.",
                       metavar="SKIP", default=10, action="store")
-    parser.add_option("-m", "--max", dest="max", 
+    parser.add_option("-m", "--max", dest="max",
                       help="Make largest possible file for Open Office (65k lines). If selected, other options ignored.",
                       metavar="MAX", default=False, action="store_true")
 

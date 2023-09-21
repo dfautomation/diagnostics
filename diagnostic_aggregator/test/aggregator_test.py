@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Tests receipt of /diagnostics_agg from diagnostic aggregator
+# \brief Tests receipt of /diagnostics_agg from diagnostic aggregator
 
 from __future__ import with_statement
 PKG = 'diagnostic_aggregator'
@@ -53,7 +53,9 @@ from diagnostic_msgs.msg import DiagnosticArray
 
 prefix = ""
 
-##\brief Removes name chaff (ex: 'tilt_hokuyo_node: Frequency' to 'Frequency')
+# \brief Removes name chaff (ex: 'tilt_hokuyo_node: Frequency' to 'Frequency')
+
+
 def fix_sub_name(name, remove_prefixes):
     last = str(name)
     for start_name in remove_prefixes:
@@ -63,15 +65,18 @@ def fix_sub_name(name, remove_prefixes):
             last = last[1:]
         while last.startswith(' '):
             last = last[1:]
-    
+
     return last
+
 
 def combine_name_prefix(my_prefix, name, remove_prefixes):
     fixed = fix_sub_name(name.replace('/', ''), remove_prefixes)
     return '/'.join([prefix, my_prefix, fixed])
 
+
 def header_name(my_prefix):
     return '/'.join([prefix, my_prefix])
+
 
 def _get_params_list(params):
     out = []
@@ -79,7 +84,8 @@ def _get_params_list(params):
         for p in params:
             out.append(str(p))
         return out
-    return [ str(params) ]
+    return [str(params)]
+
 
 def name_to_full_generic(name, my_prefix, value, header=False):
     remove_prefixes = []
@@ -123,8 +129,8 @@ def name_to_full_generic(name, my_prefix, value, header=False):
                     return header_name(my_prefix)
                 return combine_name_prefix(my_prefix, name, remove_prefixes)
 
-
     return None
+
 
 def name_to_agg_name(name, params):
     for key, value in params.items():
@@ -142,6 +148,8 @@ def name_to_agg_name(name, params):
     return combine_name_prefix('Other', name, [])
 
 # Returns header name for particular item
+
+
 def name_to_agg_header(name, params):
     for key, value in params.items():
         if 'path' not in value or 'type' not in value:
@@ -157,7 +165,9 @@ def name_to_agg_header(name, params):
     # If we don't have it...
     return header_name('Other')
 
-##\brief Uses aggregator parameters to compare diagnostics with aggregated output
+# \brief Uses aggregator parameters to compare diagnostics with aggregated output
+
+
 class TestAggregator(unittest.TestCase):
     def __init__(self, *args):
         super(TestAggregator, self).__init__(*args)
@@ -172,28 +182,27 @@ class TestAggregator(unittest.TestCase):
         parser.add_option('--base_path', action="store", dest="base_path",
                           default="", metavar="BASE_PATH",
                           help="Base path for all output topics")
-        
+
         self.diag_msgs = {}
         self.agg_msgs = {}
-        
+
         rospy.init_node('test_diag_agg')
         options, args = parser.parse_args(rospy.myargv())
 
         global prefix
         prefix = options.base_path
-        
+
         self.params = rospy.get_param(options.param)
         self.duration = options.duration
         rospy.Subscriber('diagnostics_agg', DiagnosticArray, self.cb)
         rospy.Subscriber('diagnostics', DiagnosticArray, self.diag_cb)
-        
+
         self._mutex = threading.Lock()
 
     def diag_cb(self, msg):
         with self._mutex:
             for stat in msg.status:
                 self.diag_msgs[stat.name] = stat
-
 
     def cb(self, msg):
         with self._mutex:
@@ -218,17 +227,17 @@ class TestAggregator(unittest.TestCase):
             # Go through all messages and check that we have them in aggregate
             for name, msg in self.diag_msgs.items():
                 agg_name = name_to_agg_name(name, self.params)
-                
+
                 self.assert_(agg_name is not None, 'Aggregated name is None for %s' % name)
                 self.assert_(agg_name in self.agg_msgs, 'No matching name found for name: %s, aggregated name: %s' % (name, agg_name))
                 self.assert_(msg.level == self.agg_msgs[agg_name].level, 'Status level of original, aggregated messages doesn\'t match. Name: %s, aggregated name: %s.' % (name, agg_name))
                 self.assert_(msg.message == self.agg_msgs[agg_name].message, 'Status message of original, aggregated messages doesn\'t match. Name: %s, aggregated name: %s' % (name, agg_name))
-                
+
                 # This is because the analyzers only reports stale if
                 # all messages underneath it are stale
-                if self.agg_msgs[agg_name].level == 3: # Stale
+                if self.agg_msgs[agg_name].level == 3:  # Stale
                     self.agg_msgs[agg_name].level = -1
-            
+
                 header = name_to_agg_header(name, self.params)
                 if header in all_headers:
                     all_headers[header] = max(all_headers[header], self.agg_msgs[agg_name].level)
@@ -236,7 +245,7 @@ class TestAggregator(unittest.TestCase):
                     all_headers[header] = self.agg_msgs[agg_name].level
 
                 del self.agg_msgs[agg_name]
-            
+
             # Check that we have all_headers
             for header, lvl in all_headers.items():
                 # If everything is stale, report stale. Otherwise, it should report an error
@@ -250,11 +259,10 @@ class TestAggregator(unittest.TestCase):
         # Check that we have the main header message
             if len(prefix) > 0:
                 self.assert_(len(self.agg_msgs) == 1, "Incorrect number of messages remaining: %d. Messages: %s" % (len(self.agg_msgs), str(self.agg_msgs)))
-                
+
                 self.assert_(prefix in self.agg_msgs, "Global prefix not found in messages: %s. Messages: %s" % (prefix, str(self.agg_msgs)))
             else:
                 self.assert_(len(self.agg_msgs) == 0, "Incorrect number of messages remaining: %d. Messages: %s. Expected 0." % (len(self.agg_msgs), str(self.agg_msgs)))
-                
 
 
 if __name__ == '__main__':

@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Publishes diagnostic messages for diagnostic aggregator unit test
+# \brief Publishes diagnostic messages for diagnostic aggregator unit test
 
 PKG = 'diagnostic_aggregator'
 
@@ -49,7 +49,7 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 if __name__ == '__main__':
     rospy.init_node('diag_pub')
     pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
-    
+
     array = DiagnosticArray()
     array.status = [
         # GenericAnalyzer prefix1

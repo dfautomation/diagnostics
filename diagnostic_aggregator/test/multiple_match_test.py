@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Tests that two analyzers can match and analyze a single item
+# \brief Tests that two analyzers can match and analyze a single item
 
 from __future__ import with_statement
 DURATION = 10
@@ -50,11 +50,14 @@ MULTI_NAME = 'multi'
 HEADER1 = 'Header1'
 HEADER2 = 'Header2'
 
+
 def get_raw_name(agg_name):
     return agg_name.split('/')[-1]
 
+
 def get_header_name(agg_name):
     return '/'.join(agg_name.split('/')[1:-1])
+
 
 class DiagnosticItem:
     def __init__(self, msg):
@@ -74,6 +77,7 @@ class DiagnosticItem:
 
         self.update_time = rospy.get_time()
 
+
 class TestMultipleMatch(unittest.TestCase):
     def __init__(self, *args):
         super(TestMultipleMatch, self).__init__(*args)
@@ -86,7 +90,7 @@ class TestMultipleMatch(unittest.TestCase):
         self._starttime = rospy.get_time()
 
         sub_agg = rospy.Subscriber("/diagnostics_agg", DiagnosticArray, self.diag_agg_cb)
- 
+
     def diag_agg_cb(self, msg):
         with self._mutex:
             for stat in msg.status:
@@ -98,7 +102,7 @@ class TestMultipleMatch(unittest.TestCase):
             sleep(1.0)
             if rospy.get_time() - self._starttime > DURATION:
                 break
-        
+
         self.assert_(not rospy.is_shutdown(), "Rospy shutdown!")
 
         with self._mutex:
@@ -107,12 +111,12 @@ class TestMultipleMatch(unittest.TestCase):
 
             self.assert_(HEADER2 in self._multi_items, "Didn't have item under %s" % HEADER2)
             self.assert_(self._multi_items[HEADER2].name == MULTI_NAME, "Item name under %s didn't match %s" % (HEADER2, MULTI_NAME))
-         
+
 
 if __name__ == '__main__':
     if False:
         suite = unittest.TestSuite()
         suite.addTest(TestMultipleMatch('test_multiple_match'))
-        unittest.TextTestRunner(verbosity = 2).run(suite)
+        unittest.TextTestRunner(verbosity=2).run(suite)
     else:
         rostest.run(PKG, sys.argv[0], TestMultipleMatch, sys.argv)

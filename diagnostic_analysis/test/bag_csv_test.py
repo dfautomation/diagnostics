@@ -53,7 +53,8 @@ from diagnostic_analysis.sparse import *
 
 row_count = 100
 
-##\brief Make DiagnosticArray message for testing
+
+# \brief Make DiagnosticArray message for testing
 def make_status_msg(count):
     array = DiagnosticArray()
     stat = DiagnosticStatus()
@@ -65,10 +66,12 @@ def make_status_msg(count):
         KeyValue('Value A', str(count)),
         KeyValue('Value B', str(count)),
         KeyValue('Value C', str(count))]
-    array.status = [ stat ]
+    array.status = [stat]
     return array
 
-##\brief Tests convert logfile to CSV and making sparse
+# \brief Tests convert logfile to CSV and making sparse
+
+
 class TestBagToCSV(unittest.TestCase):
     def setUp(self):
         # Make logfile with bogus messages
@@ -85,16 +88,16 @@ class TestBagToCSV(unittest.TestCase):
         self.exp.finish_logfile()
         self.filename = self.exp.get_filename('Unit Test')
 
-        ## Make sparse CSV's
+        # Make sparse CSV's
         self.skip_10 = make_sparse_skip(self.filename, 10)
         self.length_10 = make_sparse_length(self.filename, 10)
 
-    ##\brief Tests that exported file exists and is not None
+    # \brief Tests that exported file exists and is not None
     def test_file_exists(self):
         self.assert_(self.filename is not None, "CSV file is None")
         self.assert_(os.path.isfile(self.filename), "CSV file doesn't exist")
 
-    ##\brief Test that CSV file has correct data, number of lines
+    # \brief Test that CSV file has correct data, number of lines
     def test_export(self):
         # Read CSV, count rows
         input_reader = csv.reader(open(self.filename, newline=''), delimiter=',')
@@ -111,14 +114,14 @@ class TestBagToCSV(unittest.TestCase):
             self.assert_(row[3].strip() == 'HW ID')
             self.assert_(row[4].strip() == str(count))
             count += 1
-      
+
         self.assert_(count == row_count, "Row count doesn't match")
 
-    ##\brief Tests that sparse CSV made with 'skip' option has correct number of lines
+    # \brief Tests that sparse CSV made with 'skip' option has correct number of lines
     def test_sparse_skip(self):
         self.assert_(len(open(self.skip_10).read().split('\n')) <= int(row_count / 10) + 2, "Length of sparse CSV (skipped) incorrect")
 
-    ##\brief Tests that sparse CSV made with 'length' option has correct number of lines
+    # \brief Tests that sparse CSV made with 'length' option has correct number of lines
     def test_sparse_length(self):
         self.assert_(len(open(self.length_10).read().split('\n')) == 12, "Length of sparse CSV incorrect")
 
@@ -129,9 +132,9 @@ class TestBagToCSV(unittest.TestCase):
 
         self.exp.remove_files()
 
-        
+
 if __name__ == '__main__':
-    if True: # Use rostest for accurate results
+    if True:  # Use rostest for accurate results
         rostest.unitrun(PKG, 'bag_csv_test', TestBagToCSV)
     else:
         # Manual test suite
@@ -140,5 +143,5 @@ if __name__ == '__main__':
         suite.addTest(TestBagToCSV('test_export'))
         suite.addTest(TestBagToCSV('test_sparse_skip'))
         suite.addTest(TestBagToCSV('test_sparse_length'))
-        
-        unittest.TextTestRunner(verbosity = 2).run(suite)
+
+        unittest.TextTestRunner(verbosity=2).run(suite)

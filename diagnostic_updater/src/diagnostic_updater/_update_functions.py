@@ -60,7 +60,7 @@ class FrequencyStatusParam:
     window_size is the number of events to consider in the statistics.
     """
 
-    def __init__(self, freq_bound, tolerance = 0.1, window_size = 5):
+    def __init__(self, freq_bound, tolerance=0.1, window_size=5):
         """Creates a filled-out FrequencyStatusParam."""
         self.freq_bound = freq_bound
         self.tolerance = tolerance
@@ -76,7 +76,7 @@ class FrequencyStatus(DiagnosticTask):
     been no events in the latest window.
     """
 
-    def __init__(self, params, name = "FrequencyStatus"):
+    def __init__(self, params, name="FrequencyStatus"):
         """Constructs a FrequencyStatus class with the given parameters."""
         DiagnosticTask.__init__(self, name)
         self.params = params
@@ -135,7 +135,7 @@ class TimeStampStatusParam:
     min_acceptable: minimum acceptable difference between two timestamps.
     """
 
-    def __init__(self, min_acceptable = -1, max_acceptable = 5):
+    def __init__(self, min_acceptable=-1, max_acceptable=5):
         """Creates a filled-out TimeStampStatusParam."""
         self.max_acceptable = max_acceptable
         self.min_acceptable = min_acceptable
@@ -152,7 +152,7 @@ class TimeStampStatus(DiagnosticTask):
     in a more persistent way.
     """
 
-    def __init__(self, params = TimeStampStatusParam(), name = "Timestamp Status"):
+    def __init__(self, params=TimeStampStatusParam(), name="Timestamp Status"):
         """Constructs the TimeStampStatus with the given parameters."""
         DiagnosticTask.__init__(self, name)
         self.params = params

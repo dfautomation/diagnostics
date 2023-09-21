@@ -71,7 +71,6 @@ class DiagnosticTask:
         return stat
 
 
-
 class FunctionDiagnosticTask(DiagnosticTask):
     """A DiagnosticTask based on a function.
 
@@ -92,7 +91,6 @@ class FunctionDiagnosticTask(DiagnosticTask):
 
     def run(self, stat):
         return self.fn(stat)
-
 
 
 class CompositeDiagnosticTask(DiagnosticTask):
@@ -127,7 +125,6 @@ class CompositeDiagnosticTask(DiagnosticTask):
             # Merge the new summary into the combined summary.
             combined_summary.mergeSummary(stat)
 
-
         # Copy the combined summary into the output.
         stat.summary(combined_summary)
         return stat
@@ -139,7 +136,6 @@ class CompositeDiagnosticTask(DiagnosticTask):
         CompositeDiagnosticTask is run.
         """
         self.tasks.append(t)
-
 
 
 class DiagnosticTaskVector:
@@ -164,7 +160,6 @@ class DiagnosticTaskVector:
             stat.name = self.name
             return self.fn(stat)
 
-
     def __init__(self):
         self.tasks = []
         self.lock = threading.Lock()
@@ -183,9 +178,9 @@ class DiagnosticTaskVector:
         add(task): where task is a DiagnosticTask
         add(name, fn): add a DiagnosticTask embodied by a name and function
         """
-        if len(args)==1:
+        if len(args) == 1:
             task = DiagnosticTaskVector.DiagnosticTaskInternal(args[0].getName(), args[0].run)
-        elif len(args)==2:
+        elif len(args) == 2:
             task = DiagnosticTaskVector.DiagnosticTaskInternal(args[0], args[1])
 
         with self.lock:
@@ -209,8 +204,6 @@ class DiagnosticTaskVector:
                     found = True
                     break
         return found
-
-
 
 
 class Updater(DiagnosticTaskVector):
@@ -273,11 +266,11 @@ class Updater(DiagnosticTaskVector):
         self._internal_update()
 
     def _internal_update(self):
-        warn_nohwid = len(self.hwid)==0
+        warn_nohwid = len(self.hwid) == 0
 
         status_vec = []
 
-        with self.lock: # Make sure no adds happen while we are processing here.
+        with self.lock:  # Make sure no adds happen while we are processing here.
             for task in self.tasks:
                 status = DiagnosticStatusWrapper()
                 status.name = task.name
@@ -297,7 +290,9 @@ class Updater(DiagnosticTaskVector):
                                 (status.name, status.level, status.message))
 
         if warn_nohwid and not self.warn_nohwid_done:
-            rospy.logwarn("diagnostic_updater: No HW_ID was set. This is probably a bug. Please report it. For devices that do not have a HW_ID, set this value to 'none'. This warning only occurs once all diagnostics are OK so it is okay to wait until the device is open before calling setHardwareID.");
+            rospy.logwarn("diagnostic_updater: No HW_ID was set. This is probably a bug. " +
+                "Please report it. For devices that do not have a HW_ID, set this value to 'none'. " +
+                "This warning only occurs once all diagnostics are OK so it is okay to wait until the device is open before calling setHardwareID.")
             self.warn_nohwid_done = True
 
         self.publish(status_vec)
@@ -334,7 +329,7 @@ class Updater(DiagnosticTaskVector):
         # parameter server using a standard timeout mechanism (4Hz)
 
         now = rospy.Time.now()
-        if  now >= self.last_time_period_checked + rospy.Duration(0.25):
+        if now >= self.last_time_period_checked + rospy.Duration(0.25):
             try:
                 if hasattr(rospy, 'get_param_cached'):
                     self.period = rospy.get_param_cached("~diagnostic_period", 1)
@@ -350,11 +345,11 @@ class Updater(DiagnosticTaskVector):
             msg = [msg]
 
         for stat in msg:
-            stat.name = rospy.get_name()[1:]+ ": " + stat.name
+            stat.name = rospy.get_name()[1:] + ": " + stat.name
 
         da = DiagnosticArray()
         da.status = msg
-        da.header.stamp = rospy.Time.now() # Add timestamp for ROS 0.10
+        da.header.stamp = rospy.Time.now()  # Add timestamp for ROS 0.10
         self.publisher.publish(da)
 
     def addedTaskCallback(self, task):

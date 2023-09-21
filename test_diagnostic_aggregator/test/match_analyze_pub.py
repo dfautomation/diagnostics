@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Publishes messages for aggregator testing of expected items.
+# \brief Publishes messages for aggregator testing of expected items.
 
 PKG = 'test_diagnostic_aggregator'
 
@@ -46,7 +46,7 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 if __name__ == '__main__':
     rospy.init_node('diag_pub')
     pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=10)
-        
+
     while not rospy.is_shutdown():
         array = DiagnosticArray()
         array.header.stamp = rospy.get_rostime()
@@ -57,11 +57,11 @@ if __name__ == '__main__':
             # Generic for something else
             DiagnosticStatus(1, 'Something', 'OK', '', []),
             DiagnosticStatus(2, 'Something Else', 'OK', '', []),
-            
+
             # OtherAnalyzer for Other
             DiagnosticStatus(2, 'other1', 'OK', '', []),
             DiagnosticStatus(1, 'other2', 'OK', '', []),
             DiagnosticStatus(0, 'other3', 'OK', '', [])]
-        
+
         pub.publish(array)
         sleep(1)

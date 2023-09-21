@@ -32,8 +32,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-##\author Kevin Watts
-##\brief Make CSV files smaller for use in spreadsheet software
+# \author Kevin Watts
+# \brief Make CSV files smaller for use in spreadsheet software
 
 PKG = 'diagnostic_analysis'
 import roslib
@@ -41,10 +41,12 @@ roslib.load_manifest(PKG)
 
 import csv, os, sys
 
-##\brief Makes sparse CSV by skipping every nth value
-##\param csv_file str : CSV filename
-##\param skip int : Write every nth row to sparse CSV
-##\return Path of output file
+# \brief Makes sparse CSV by skipping every nth value
+# \param csv_file str : CSV filename
+# \param skip int : Write every nth row to sparse CSV
+# \return Path of output file
+
+
 def make_sparse_skip(csv_file, skip):
     output_file = csv_file[:-4] + '_sparse.csv'
 
@@ -58,15 +60,17 @@ def make_sparse_skip(csv_file, skip):
         if skip_count == skip:
             output_writer.writerow(row)
             skip_count = 0
-            
+
         skip_count = skip_count + 1
 
     return output_file
 
-##\brief Makes sparse CSV with the given number of rows
-##\param csv_file str : CSV filename
-##\param length int : Desired number of rows in CSV
-##\return Path of output file
+# \brief Makes sparse CSV with the given number of rows
+# \param csv_file str : CSV filename
+# \param length int : Desired number of rows in CSV
+# \return Path of output file
+
+
 def make_sparse_length(csv_file, length):
     output_file = csv_file[:-4] + '_sprs_len.csv'
 
@@ -84,7 +88,7 @@ def make_sparse_length(csv_file, length):
         if skip_count >= skip:
             output_writer.writerow(row)
             skip_count = 0
-            
+
         skip_count = skip_count + 1
 
     return output_file

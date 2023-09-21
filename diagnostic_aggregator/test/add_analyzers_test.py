@@ -44,6 +44,7 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 
 PKG = 'diagnostic_aggregator'
 
+
 class TestAddAnalyzer(unittest.TestCase):
     def __init__(self, *args):
         super(TestAddAnalyzer, self).__init__(*args)
@@ -92,7 +93,7 @@ class TestAddAnalyzer(unittest.TestCase):
         with self._mutex:
             agg_paths = [msg.name for name, msg in self.agg_msgs.items()]
             self.assert_(not any(expected in agg_paths for expected in self.expected))
-            
+
         # add the new groups
         self.add_analyzer()
 
@@ -111,27 +112,27 @@ class TestAddAnalyzer(unittest.TestCase):
             agg_paths = [msg.name for name, msg in self.agg_msgs.items()]
             self.assert_(all(expected in agg_paths for expected in self.expected))
 
-        rospy.sleep(rospy.Duration(5)) # wait a bit for the new items to move to the right group
+        rospy.sleep(rospy.Duration(5))  # wait a bit for the new items to move to the right group
         arr.header.stamp = rospy.get_rostime()
-        self.pub.publish(arr) # publish again to get the correct groups to show OK
+        self.pub.publish(arr)  # publish again to get the correct groups to show OK
         self.wait_for_agg()
 
         for name, msg in self.agg_msgs.items():
-            if name in self.expected: # should have just received messages on the analyzer
+            if name in self.expected:  # should have just received messages on the analyzer
                 self.assert_(msg.message == 'OK')
-                
+
             agg_paths = [msg.name for name, msg in self.agg_msgs.items()]
             self.assert_(all(expected in agg_paths for expected in self.expected))
-                
 
         self.bond.shutdown()
-        rospy.sleep(rospy.Duration(5)) # wait a bit for the analyzers to unload
+        rospy.sleep(rospy.Duration(5))  # wait a bit for the analyzers to unload
         self.wait_for_agg()
         # the aggregator data should no longer contain the paths once the bond is shut down
         with self._mutex:
             agg_paths = [msg.name for name, msg in self.agg_msgs.items()]
             self.assert_(not any(expected in agg_paths for expected in self.expected))
-        
+
+
 if __name__ == '__main__':
     print('SYS ARGS:', sys.argv)
     rostest.run(PKG, sys.argv[0], TestAddAnalyzer, sys.argv)

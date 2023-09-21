@@ -105,11 +105,11 @@ def parse_sensor_line(line):
     line = line.lstrip()
     [name, reading] = line.split(":")
 
-    #hack for when the name is temp1
+    # hack for when the name is temp1
     if name.find("temp") != -1:
         return None
     else:
-        [sensor.name, sensor.type] = name.rsplit(" ",1)
+        [sensor.name, sensor.type] = name.rsplit(" ", 1)
 
     if sensor.name == "Core":
         sensor.name = name

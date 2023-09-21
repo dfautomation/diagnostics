@@ -74,19 +74,19 @@ def ntp_diag(st, host, off, error_offset):
     else:
         st.level = DIAG.DiagnosticStatus.ERROR
         st.message = "Error Running ntpdate. Returned %d" % res
-        st.values = [ DIAG.KeyValue("Offset (us)", "N/A"),
-                        DIAG.KeyValue("Offset tolerance (us)", str(off)),
-                        DIAG.KeyValue("Offset tolerance (us) for Error", str(error_offset)),
-                        DIAG.KeyValue("Output", o.decode()),
-                        DIAG.KeyValue("Errors", e.decode()) ]
+        st.values = [DIAG.KeyValue("Offset (us)", "N/A"),
+                    DIAG.KeyValue("Offset tolerance (us)", str(off)),
+                    DIAG.KeyValue("Offset tolerance (us) for Error", str(error_offset)),
+                    DIAG.KeyValue("Output", o.decode()),
+                    DIAG.KeyValue("Errors", e.decode())]
 
     return st
 
 
 class NTPMonitor:
-    
+
     def __init__(self, ntp_hostname, offset=500, self_offset=500,
-                 diag_hostname = None, error_offset = 5000000,
+                 diag_hostname=None, error_offset=5000000,
                  do_self_test=True):
 
         self.ntp_hostname = ntp_hostname
@@ -95,21 +95,21 @@ class NTPMonitor:
         self.diag_hostname = diag_hostname
         self.error_offset = error_offset
         self.do_self_test = do_self_test
-        
+
         self.hostname = socket.gethostname()
         if self.diag_hostname is None:
             self.diag_hostname = self.hostname
 
         self.stat = DIAG.DiagnosticStatus()
         self.stat.level = DIAG.DiagnosticStatus.OK
-        self.stat.name = "NTP offset from "+ self.diag_hostname + " to " + self.ntp_hostname
+        self.stat.name = "NTP offset from " + self.diag_hostname + " to " + self.ntp_hostname
         self.stat.message = "OK"
         self.stat.hardware_id = self.hostname
         self.stat.values = []
 
         self.self_stat = DIAG.DiagnosticStatus()
         self.self_stat.level = DIAG.DiagnosticStatus.OK
-        self.self_stat.name = "NTP self-offset for "+ self.diag_hostname
+        self.self_stat.name = "NTP self-offset for " + self.diag_hostname
         self.self_stat.message = "OK"
         self.self_stat.hardware_id = self.hostname
         self.self_stat.values = []
@@ -170,12 +170,11 @@ def ntp_monitor_main(argv=sys.argv):
     if (len(args) != 2):
         parser.error("Invalid arguments. Must have HOSTNAME [args]. %s" % args)
 
-
     try:
         offset = int(options.offset_tol)
         self_offset = int(options.self_offset_tol)
         error_offset = int(options.error_offset_tol)
-    except:
+    except Exception:
         parser.error("Offsets must be numbers")
 
     ntp_monitor = NTPMonitor(args[1], offset, self_offset,
@@ -184,12 +183,11 @@ def ntp_monitor_main(argv=sys.argv):
 
     rospy.spin()
 
+
 if __name__ == "__main__":
     rospy.init_node("ntp_monitor", anonymous=True)
     try:
         ntp_monitor_main(rospy.myargv())
-    except KeyboardInterrupt: pass
-    except SystemExit: pass
-    except:
+    except Exception:
         import traceback
         traceback.print_exc()

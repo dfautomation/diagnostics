@@ -33,7 +33,8 @@ class AddAnalyzers:
         """
         parser = argparse.ArgumentParser(description=usage)
         parser.add_argument('analyzer_yaml', nargs='?', default=None)
-        parser.add_argument('-t', '--timeout', type=float, dest='timeout', default=None, help='time in seconds to wait for the diagnostic_agg service to come up before timing out. Default waits indefinitely')
+        parser.add_argument('-t', '--timeout', type=float, dest='timeout', default=None,
+                            help='time in seconds to wait for the diagnostic_agg service to come up before timing out. Default waits indefinitely')
         args = parser.parse_args(myargv[1:])
 
         if args.analyzer_yaml is None:
@@ -70,6 +71,7 @@ class AddAnalyzers:
         if not rospy.is_shutdown():
             rospy.logerr(reason)
             rospy.signal_shutdown(reason)
+
 
 if __name__ == '__main__':
     rospy.init_node(NAME)

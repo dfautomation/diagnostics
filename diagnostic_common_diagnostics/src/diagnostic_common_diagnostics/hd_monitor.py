@@ -52,11 +52,11 @@ critical_hd_level = 1
 hd_temp_warn = 55  # 3580, setting to 55C to after checking manual
 hd_temp_error = 70  # Above this temperature, hard drives will have serious problems
 
-stat_dict = { 0: 'OK', 1: 'Warning', 2: 'Error' }
-temp_dict = { 0: 'OK', 1: 'Hot', 2: 'Critical Hot' }
-usage_dict = { 0: 'OK', 1: 'Low Disk Space', 2: 'Very Low Disk Space' }
+stat_dict = {0: 'OK', 1: 'Warning', 2: 'Error'}
+temp_dict = {0: 'OK', 1: 'Hot', 2: 'Critical Hot'}
+usage_dict = {0: 'OK', 1: 'Low Disk Space', 2: 'Very Low Disk Space'}
 
-REMOVABLE = ['/dev/sg1', '/dev/sdb'] # Store removable drives so we can ignore if removed
+REMOVABLE = ['/dev/sg1', '/dev/sdb']  # Store removable drives so we can ignore if removed
 
 
 # Connects to hddtemp daemon to get temp, HD make.

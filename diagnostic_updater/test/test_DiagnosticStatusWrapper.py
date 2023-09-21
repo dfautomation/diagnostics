@@ -68,9 +68,10 @@ class TestDiagnosticStatusWrapper(unittest.TestCase):
 
     def test_add(self):
         d = DiagnosticStatusWrapper()
-        d.add('key','val')
+        d.add('key', 'val')
         self.assertEqual(d.values[0].key, 'key')
         self.assertEqual(d.values[0].value, 'val')
+
 
 if __name__ == '__main__':
     unittest.main()

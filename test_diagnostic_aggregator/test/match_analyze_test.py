@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Tests that analyzer that matches item will not affect item going into Other
+# \brief Tests that analyzer that matches item will not affect item going into Other
 
 from __future__ import with_statement
 
@@ -50,11 +50,14 @@ from optparse import OptionParser
 
 MATCH_NAME = 'Match Item'
 
+
 def get_raw_name(agg_name):
     return agg_name.split('/')[-1]
 
+
 def get_header_name(agg_name):
     return '/'.join(agg_name.split('/')[1:-1])
+
 
 class TestMatchAnalyze(unittest.TestCase):
     def __init__(self, *args):
@@ -83,7 +86,7 @@ class TestMatchAnalyze(unittest.TestCase):
         self._starttime = rospy.get_time()
 
         sub_agg = rospy.Subscriber("/diagnostics_agg", DiagnosticArray, self.diag_agg_cb)
- 
+
     def diag_agg_cb(self, msg):
         with self._mutex:
             for stat in msg.status:
@@ -96,19 +99,19 @@ class TestMatchAnalyze(unittest.TestCase):
             sleep(1.0)
             if rospy.get_time() - self._starttime > DURATION:
                 break
-        
+
         self.assert_(not rospy.is_shutdown(), "Rospy shutdown!")
 
         with self._mutex:
             self.assert_(self.header, "Header is none. Option --header not given")
             self.assert_(len(self.match_headers) == 1, "Multiple analyzers reported our item! Headers: %s" % self.match_headers)
             self.assert_(self.match_headers.count(self.header) > 0, "Didn't have item under header \"%s\". Header: \"%s\"" % (self.header, self.match_headers[0]))
-         
+
 
 if __name__ == '__main__':
     if False:
         suite = unittest.TestSuite()
         suite.addTest(TestMatchAnalyze('test_match_analyze'))
-        unittest.TextTestRunner(verbosity = 2).run(suite)
+        unittest.TextTestRunner(verbosity=2).run(suite)
     else:
         rostest.run(PKG, sys.argv[0], TestMatchAnalyze, sys.argv)

@@ -54,6 +54,7 @@ DummyClass and dummy_diagnostics show how to use a diagnostic_updater
 class.
 '''
 
+
 def dummy_diagnostic(stat):
     # stat is supposed to be of type diagnostic_updater.DiagnosticStatusWrapper
     # DiagnosticStatusWrapper is a derived class of
@@ -79,8 +80,8 @@ def dummy_diagnostic(stat):
     # add transparently handles conversion to string (using str()).
     stat.add("Time to Launch", time_to_launch)
     # add allows arbitrary printf style formatting.
-    stat.add("Geeky thing to say", "The square of the time to launch %f is %f" % \
-        (time_to_launch, time_to_launch * time_to_launch) )
+    stat.add("Geeky thing to say", "The square of the time to launch %f is %f" %
+        (time_to_launch, time_to_launch * time_to_launch))
 
     # As opposed to the C++ diagnostic function which modifies its argument,
     # the python version must return the modified message.
@@ -124,7 +125,7 @@ def check_upper_bound(stat):
     return stat
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     rospy.init_node("diagnostic_updater_example")
 
     # The Updater class advertises to /diagnostics, and has a
@@ -143,7 +144,7 @@ if __name__=='__main__':
     # non-OK statuses.)
     updater.setHardwareID("none")
     # Or...
-    updater.setHardwareID("Device-%i-%i" % (27, 46) )
+    updater.setHardwareID("Device-%i-%i" % (27, 46))
 
     # Diagnostic tasks are added to the Updater. They will later be run when
     # the updater decides to update.
@@ -192,7 +193,7 @@ if __name__=='__main__':
 
     pub1 = rospy.Publisher("topic1", std_msgs.msg.Bool, queue_size=10)
     pub2_temp = rospy.Publisher("topic2", std_msgs.msg.Bool, queue_size=10)
-    rospy.sleep(2) # It isn't important if it doesn't take time.
+    rospy.sleep(2)  # It isn't important if it doesn't take time.
 
     # Some diagnostic tasks are very common, such as checking the rate
     # at which a topic is publishing, or checking that timestamps are
@@ -211,7 +212,7 @@ if __name__=='__main__':
     # Refer to diagnostic_updater.FrequencyStatusParam and
     # diagnostic_updater.TimestampStatusParam documentation for details on
     # what the parameters mean:
-    freq_bounds = {'min':0.5, 'max':2} # If you update these values, the
+    freq_bounds = {'min': 0.5, 'max': 2}  # If you update these values, the
     # HeaderlessTopicDiagnostic will use the new values.
     pub1_freq = diagnostic_updater.HeaderlessTopicDiagnostic("topic1", updater,
         diagnostic_updater.FrequencyStatusParam(freq_bounds, 0.1, 10))
@@ -223,7 +224,7 @@ if __name__=='__main__':
     #
     # Each time pub1_freq is updated, lower will also get updated and its
     # output will be merged with the output from pub1_freq.
-    pub1_freq.addTask(lower) # (This wouldn't work if lower was stateful).
+    pub1_freq.addTask(lower)  # (This wouldn't work if lower was stateful).
 
     # If we know that the state of the node just changed, we can force an
     # immediate update.

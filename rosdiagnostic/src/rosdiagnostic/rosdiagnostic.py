@@ -71,15 +71,15 @@ def _check_master():
 class RosDiagnostics(object):
 
     DIAG_MSG_LVL_STR_NOCOLOR = {
-        DiagnosticStatus.OK:    ' OK  ',
-        DiagnosticStatus.WARN:  'WARN ',
+        DiagnosticStatus.OK: ' OK  ',
+        DiagnosticStatus.WARN: 'WARN ',
         DiagnosticStatus.ERROR: 'ERROR',
         DiagnosticStatus.STALE: 'STALE',
     }
 
     DIAG_MSG_LVL_STR_COLOR = {
-        DiagnosticStatus.OK:    '\033[92m OK  \033[0m',
-        DiagnosticStatus.WARN:  '\033[93mWARN \033[0m',
+        DiagnosticStatus.OK: '\033[92m OK  \033[0m',
+        DiagnosticStatus.WARN: '\033[93mWARN \033[0m',
         DiagnosticStatus.ERROR: '\033[91mERROR\033[0m',
         DiagnosticStatus.STALE: '\033[94mSTALE\033[0m',
     }

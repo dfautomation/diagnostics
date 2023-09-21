@@ -43,6 +43,7 @@ OK = DiagnosticStatus.OK
 WARN = DiagnosticStatus.WARN
 ERROR = DiagnosticStatus.ERROR
 
+
 class DiagnosticStatusWrapper(DiagnosticStatus):
     """ Wrapper for the diagnostic_msgs::DiagnosticStatus message that makes it
     easier to update.
@@ -69,7 +70,6 @@ class DiagnosticStatusWrapper(DiagnosticStatus):
         """
         DiagnosticStatus.__init__(self, *args, **kwds)
 
-
     def summary(self, *args):
         """ Fills out the level and message fields of the DiagnosticStatus.
 
@@ -77,19 +77,17 @@ class DiagnosticStatusWrapper(DiagnosticStatus):
         summary(diagnostic_status): Copies the summary from a DiagnosticStatus message
         summary(lvl,msg): sets from lvl and messages
         """
-        if len(args)==1:
+        if len(args) == 1:
             self.level = args[0].level
             self.message = args[0].message
-        elif len(args)==2:
+        elif len(args) == 2:
             self.level = args[0]
             self.message = str(args[1])
-
 
     def clearSummary(self):
         """ Clears the summary, setting the level to zero and the message to "".
         """
         self.summary(0, "")
-
 
     def mergeSummary(self, *args):
         """ Merges a level and message with the existing ones.
@@ -110,15 +108,15 @@ class DiagnosticStatusWrapper(DiagnosticStatus):
         mergeSummary(diagnostic_status): merge from a DiagnosticStatus message
         mergeSummary(lvl,msg): sets from lvl and msg
         """
-        if len(args)==1:
+        if len(args) == 1:
             lvl = args[0].level
             msg = args[0].message
-        elif len(args)==2:
+        elif len(args) == 2:
             lvl = args[0]
             msg = args[1]
 
-        if (lvl>0) == (self.level>0):
-            if len(self.message)>0:
+        if (lvl > 0) == (self.level > 0):
+            if len(self.message) > 0:
                 self.message += "; "
             self.message += msg
         elif lvl > self.level:
@@ -126,7 +124,6 @@ class DiagnosticStatusWrapper(DiagnosticStatus):
 
         if lvl > self.level:
             self.level = lvl
-
 
     def add(self, key, val):
         """ Add a key-value pair.
@@ -140,4 +137,4 @@ class DiagnosticStatusWrapper(DiagnosticStatus):
         @type value string
         @param value Value to be added.
         """
-        self.values.append(KeyValue(key,str(val)))
+        self.values.append(KeyValue(key, str(val)))

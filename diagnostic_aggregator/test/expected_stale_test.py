@@ -32,9 +32,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-##\author Kevin Watts
+# \author Kevin Watts
 
-##\brief Tests that expected items from GenericAnalyzer will appear stale
+# \brief Tests that expected items from GenericAnalyzer will appear stale
 
 from __future__ import with_statement
 DURATION = 15
@@ -46,8 +46,10 @@ from time import sleep
 import sys
 import threading
 
+
 def get_raw_name(agg_name):
     return agg_name.split('/')[-1]
+
 
 class DiagnosticItem:
     def __init__(self, msg):
@@ -65,6 +67,7 @@ class DiagnosticItem:
         self.message = msg.message
 
         self.update_time = rospy.get_time()
+
 
 class TestExpectedItemsStale(unittest.TestCase):
     def __init__(self, *args):
@@ -105,9 +108,13 @@ class TestExpectedItemsStale(unittest.TestCase):
             for name, item in self._expecteds.items():
                 self.assert_(name in self._agg_expecteds, "Item %s not found in aggregated diagnostics output" % name)
                 if item.is_stale():
-                    self.assert_(self._agg_expecteds[name].level == 3, "Stale item in diagnostics, but aggregated didn't report as stale. Item: %s, state: %d" % (name, self._agg_expecteds[name].level))
+                    self.assert_(
+                        self._agg_expecteds[name].level == 3,
+                        "Stale item in diagnostics, but aggregated didn't report as stale. Item: %s, state: %d" %
+                        (name, self._agg_expecteds[name].level))
                 else:
                     self.assert_(self._agg_expecteds[name].level == item.level, "Diagnostic level of aggregated, raw item don't match for %s" % name)
+
 
 if __name__ == '__main__':
     rostest.run(PKG, sys.argv[0], TestExpectedItemsStale, sys.argv)
