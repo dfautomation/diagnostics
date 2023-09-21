@@ -34,16 +34,18 @@
 
 from __future__ import with_statement, division
 
-import roslib; roslib.load_manifest('diagnostic_common_diagnostics')
+import roslib
 import rospy
 import diagnostic_updater as DIAG
 
-import socket, string
+import socket
 import subprocess
 import math
 import re
 import sys
-from StringIO import StringIO
+from io import StringIO
+roslib.load_manifest('diagnostic_common_diagnostics')
+
 
 class Sensor(object):
     def __init__(self):
@@ -141,35 +143,44 @@ def parse_sensor_line(line):
 
     return sensor
 
+
 def _rads_to_rpm(rads):
     return rads / (2 * math.pi) * 60
+
 
 def _rpm_to_rads(rpm):
     return rpm * (2 * math.pi) / 60
 
+
 def parse_sensors_output(output):
-    out = StringIO(output)
+    out = StringIO(output if isinstance(output, str) else output.decode('utf-8'))
 
     sensorList = []
     for line in out.readlines():
         # Check for a colon
-        if line.find(":") != -1 and line.find("Adapter") == -1:
-            s = parse_sensor_line(line)
+        if ":" in line and "Adapter" not in line:
+            try:
+                s = parse_sensor_line(line)
+            except Exception as exc:
+                rospy.logwarn('Unable to parse line "%s", due to %s', line, exc)
             if s is not None:
                 sensorList.append(s)
     return sensorList
 
+
 def get_sensors():
-    p = subprocess.Popen('sensors', stdout = subprocess.PIPE,
-                         stderr = subprocess.PIPE, shell = True)
-    (o,e) = p.communicate()
+    p = subprocess.Popen('sensors', stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE, shell=True)
+    (o, e) = p.communicate()
     if not p.returncode == 0:
         return ''
     if not o:
         return ''
     return o
 
+
 class SensorsMonitor(object):
+
     def __init__(self, hostname):
         self.hostname = hostname
         self.ignore_fans = rospy.get_param('~ignore_fans', False)
@@ -177,7 +188,7 @@ class SensorsMonitor(object):
 
         self.updater = DIAG.Updater()
         self.updater.setHardwareID("none")
-        self.updater.add('%s Sensor Status'%self.hostname, self.monitor)
+        self.updater.add('%s Sensor Status' % self.hostname, self.monitor)
 
         self.timer = rospy.Timer(rospy.Duration(1), self.timer_cb)
 
@@ -201,21 +212,22 @@ class SensorsMonitor(object):
                         stat.mergeSummary(DIAG.ERROR, "High Voltage")
                     stat.add(" ".join([sensor.getName(), sensor.getType()]), sensor.getInput())
                 elif sensor.getType() == "Speed":
-                    if not ignore_fans:
+                    if not self.ignore_fans:
                         if sensor.getInput() < sensor.getMin():
                             stat.mergeSummary(DIAG.ERROR, "No Fan Speed")
                     stat.add(" ".join([sensor.getName(), sensor.getType()]), sensor.getInput())
-        except Exception, e:
+        except Exception:
             import traceback
             rospy.logerr('Unable to process lm-sensors data')
             rospy.logerr(traceback.format_exc())
         return stat
 
+
 if __name__ == '__main__':
     hostname = socket.gethostname()
-    hostname_clean = string.translate(hostname, string.maketrans('-','_'))
+    hostname_clean = hostname.translate(hostname.maketrans('-', '_'))
     try:
-        rospy.init_node('sensors_monitor_%s'%hostname_clean)
+        rospy.init_node('sensors_monitor_%s' % hostname_clean)
     except rospy.ROSInitException:
         print('Unable to initialize node. Master may not be running')
         sys.exit(0)

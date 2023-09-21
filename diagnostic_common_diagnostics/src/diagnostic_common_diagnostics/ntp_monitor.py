@@ -49,20 +49,20 @@ def ntp_diag(st, host, off, error_offset):
     try:
         p = Popen(["ntpdate", "-q", host], stdout=PIPE, stdin=PIPE, stderr=PIPE)
         res = p.wait()
-        (o,e) = p.communicate()
-    except OSError, (errno, msg):
-        if errno == 4:
-            return None #ctrl-c interrupt
+        (o, e) = p.communicate()
+    except OSError as ex:
+        if ex.errno == 4:
+            return None  # ctrl-c interrupt
         else:
             raise
-    if (res == 0):
-        measured_offset = float(re.search("offset (.*),", o).group(1))*1000000
+    if res == 0:
+        measured_offset = float(re.search("offset (.*),", o.decode()).group(1)) * 1000000
 
         st.level = DIAG.DiagnosticStatus.OK
         st.message = "OK"
-        st.values = [ DIAG.KeyValue("Offset (us)", str(measured_offset)),
-                        DIAG.KeyValue("Offset tolerance (us)", str(off)),
-                        DIAG.KeyValue("Offset tolerance (us) for Error", str(error_offset)) ]
+        st.values = [DIAG.KeyValue("Offset (us)", str(measured_offset)),
+                    DIAG.KeyValue("Offset tolerance (us)", str(off)),
+                    DIAG.KeyValue("Offset tolerance (us) for Error", str(error_offset))]
 
         if (abs(measured_offset) > off):
             st.level = DIAG.DiagnosticStatus.WARN
@@ -77,8 +77,8 @@ def ntp_diag(st, host, off, error_offset):
         st.values = [ DIAG.KeyValue("Offset (us)", "N/A"),
                         DIAG.KeyValue("Offset tolerance (us)", str(off)),
                         DIAG.KeyValue("Offset tolerance (us) for Error", str(error_offset)),
-                        DIAG.KeyValue("Output", o),
-                        DIAG.KeyValue("Errors", e) ]
+                        DIAG.KeyValue("Output", o.decode()),
+                        DIAG.KeyValue("Errors", e.decode()) ]
 
     return st
 

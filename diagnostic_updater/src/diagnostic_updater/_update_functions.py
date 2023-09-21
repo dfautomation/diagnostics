@@ -112,13 +112,13 @@ class FrequencyStatus(DiagnosticTask):
                 stat.summary(2, "No events recorded.")
             elif freq < self.params.freq_bound['min'] * (1 - self.params.tolerance):
                 stat.summary(1, "Frequency too low.")
-            elif self.params.freq_bound.has_key('max') and freq > self.params.freq_bound['max'] * (1 + self.params.tolerance):
+            elif 'max' in self.params.freq_bound and freq > self.params.freq_bound['max'] * (1 + self.params.tolerance):
                 stat.summary(1, "Frequency too high.")
             else:
                 stat.summary(0, "Desired frequency met")
 
             stat.add("Events", "%d over %gs | %d since startup" % (events, window, self.count))
-            if self.params.freq_bound.has_key('max') and self.params.freq_bound['min'] == self.params.freq_bound['max']:
+            if 'max' in self.params.freq_bound and self.params.freq_bound['min'] == self.params.freq_bound['max']:
                 stat.add("Frequency (Hz)", "%g (%g~%g%%)" % (freq, self.params.freq_bound['min'], self.params.tolerance * 100))
             else:
                 stat.add("Frequency (Hz)", "%g (%g-%g)" % (freq,
