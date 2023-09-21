@@ -35,11 +35,12 @@
 # \author Kevin Watts
 # \brief LogExporter class does diagnostics logfile conversion to CSV
 
-import roslib
 import rosbag
-import diagnostic_msgs.msg
-import time, sys, os
-import operator, tempfile, subprocess
+import time
+import os
+import operator
+import tempfile
+import subprocess
 
 # \brief Converts and processes diagnostics logs to CSV format
 ##

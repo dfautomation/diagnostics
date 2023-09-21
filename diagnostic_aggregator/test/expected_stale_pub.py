@@ -36,15 +36,14 @@
 
 # \brief Publishes messages for aggregator testing of expected items.
 
+import roslib
+from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
+from time import sleep
+import rospy
 PKG = 'diagnostic_aggregator'
 
-import roslib; roslib.load_manifest(PKG)
+roslib.load_manifest(PKG)
 
-
-import rospy
-from time import sleep
-
-from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 
 if __name__ == '__main__':
     rospy.init_node('diag_pub')

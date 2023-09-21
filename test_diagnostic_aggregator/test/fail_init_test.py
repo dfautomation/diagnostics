@@ -37,16 +37,17 @@
 # \brief Tests that analyzer that fails to load will produce diagnostic error
 
 from __future__ import with_statement
+import unittest
+import rostest
+import rospy
+from optparse import OptionParser
+import threading
+import sys
+from time import sleep
+from diagnostic_msgs.msg import DiagnosticArray
 
 DURATION = 5
 PKG = 'test_diagnostic_aggregator'
-import rospy, rostest, unittest
-from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-from time import sleep
-import sys
-import threading
-
-from optparse import OptionParser
 
 
 def get_raw_name(agg_name):

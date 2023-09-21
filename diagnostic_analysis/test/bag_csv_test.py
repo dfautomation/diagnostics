@@ -34,22 +34,20 @@
 
 # Author: Kevin Watts
 
+import os
+import roslib
+from diagnostic_analysis.sparse import make_sparse_skip, make_sparse_length
+from diagnostic_analysis.exporter import LogExporter
+import csv
+import tempfile
+from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
+import rosbag
+import unittest
+import rostest
 PKG = 'diagnostic_analysis'
 
-import roslib; roslib.load_manifest(PKG)
-import rostest
-import unittest
+roslib.load_manifest(PKG)
 
-import rosbag
-from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-
-import random
-import tempfile
-import time, os
-import csv
-
-from diagnostic_analysis.exporter import LogExporter
-from diagnostic_analysis.sparse import *
 
 row_count = 100
 

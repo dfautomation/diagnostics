@@ -37,19 +37,19 @@
 # \brief Tests receipt of /diagnostics_agg from diagnostic aggregator
 
 from __future__ import with_statement
+import rostest
+import rospy
+import roslib
+from diagnostic_msgs.msg import DiagnosticArray
+import threading
+from optparse import OptionParser
+import sys
+from time import sleep
+import unittest
 PKG = 'diagnostic_aggregator'
 
-import roslib; roslib.load_manifest(PKG)
+roslib.load_manifest(PKG)
 
-import unittest
-import rospy, rostest
-from time import sleep
-import sys
-from optparse import OptionParser
-import threading
-import types
-
-from diagnostic_msgs.msg import DiagnosticArray
 
 prefix = ""
 

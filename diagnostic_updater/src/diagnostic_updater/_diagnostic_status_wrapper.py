@@ -36,7 +36,6 @@
 @author Brice Rebsamen <brice [dot] rebsamen [gmail]>
 """
 
-import rospy
 from diagnostic_msgs.msg import DiagnosticStatus, KeyValue
 
 OK = DiagnosticStatus.OK

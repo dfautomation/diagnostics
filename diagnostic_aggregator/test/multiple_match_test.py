@@ -37,14 +37,17 @@
 # \brief Tests that two analyzers can match and analyze a single item
 
 from __future__ import with_statement
+import unittest
+import rostest
+import rospy
+import roslib
+import threading
+import sys
+from time import sleep
+from diagnostic_msgs.msg import DiagnosticArray
 DURATION = 10
 PKG = 'diagnostic_aggregator'
-import roslib; roslib.load_manifest(PKG)
-import rospy, rostest, unittest
-from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-from time import sleep
-import sys
-import threading
+roslib.load_manifest(PKG)
 
 MULTI_NAME = 'multi'
 HEADER1 = 'Header1'

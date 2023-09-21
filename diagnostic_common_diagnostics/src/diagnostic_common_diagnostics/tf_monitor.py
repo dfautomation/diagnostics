@@ -39,9 +39,10 @@ A node to check the TF tree
 A big chunk of the code was copied from tfwtf, the wtf plugin for tf.
 '''
 
-import roslib; roslib.load_manifest('diagnostic_common_diagnostics')
+import roslib
 import rospy
 import diagnostic_updater as DIAG
+roslib.load_manifest('diagnostic_common_diagnostics')
 
 
 # -------------------------------------------------------------------------------

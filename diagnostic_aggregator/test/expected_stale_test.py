@@ -37,14 +37,17 @@
 # \brief Tests that expected items from GenericAnalyzer will appear stale
 
 from __future__ import with_statement
+import unittest
+import rostest
+import rospy
+import roslib
+import threading
+import sys
+from time import sleep
+from diagnostic_msgs.msg import DiagnosticArray
 DURATION = 15
 PKG = 'diagnostic_aggregator'
-import roslib; roslib.load_manifest(PKG)
-import rospy, rostest, unittest
-from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-from time import sleep
-import sys
-import threading
+roslib.load_manifest(PKG)
 
 
 def get_raw_name(agg_name):

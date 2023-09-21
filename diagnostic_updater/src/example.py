@@ -38,12 +38,12 @@
 @author Brice Rebsamen <brice [dot] rebsamen [gmail]>
 """
 
+import std_msgs
+import diagnostic_msgs
+import diagnostic_updater
+import rospy
 import roslib
 roslib.load_manifest('diagnostic_updater')
-import rospy
-import diagnostic_updater
-import diagnostic_msgs
-import std_msgs
 
 
 time_to_launch = 0

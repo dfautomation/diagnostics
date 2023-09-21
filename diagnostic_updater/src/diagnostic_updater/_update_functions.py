@@ -37,7 +37,8 @@
 """
 
 import rospy
-from ._diagnostic_updater import *
+import threading
+from ._diagnostic_updater import DiagnosticTask
 
 
 class FrequencyStatusParam:

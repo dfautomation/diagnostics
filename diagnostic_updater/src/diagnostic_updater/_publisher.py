@@ -36,9 +36,8 @@
 @author Brice Rebsamen <brice [dot] rebsamen [gmail]>
 """
 
-import rospy
-import threading
-from ._update_functions import *
+from ._diagnostic_updater import CompositeDiagnosticTask
+from ._update_functions import FrequencyStatus, TimeStampStatus
 
 
 class HeaderlessTopicDiagnostic(CompositeDiagnosticTask):

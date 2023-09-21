@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-NAME='add_analyzers'
-
-import sys
-import argparse
-from bondpy import bondpy
-from diagnostic_msgs.srv import AddDiagnostics
-import rosparam
 import rospy
+import rosparam
+from diagnostic_msgs.srv import AddDiagnostics
+from bondpy import bondpy
+import argparse
+
+NAME = 'add_analyzers'
+
 
 class AddAnalyzers:
 

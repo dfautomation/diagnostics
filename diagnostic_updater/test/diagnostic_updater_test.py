@@ -5,12 +5,14 @@
 @author Brice Rebsamen <brice [dot] rebsamen [gmail]>
 """
 
+import time
+import unittest
+from diagnostic_updater import DiagnosticTask, \
+    DiagnosticStatusWrapper, FrequencyStatus, FrequencyStatusParam, \
+    TimeStampStatus, Updater
+import rospy
 import roslib
 roslib.load_manifest('diagnostic_updater')
-import rospy
-from diagnostic_updater import *
-import unittest
-import time
 
 
 class ClassFunction(DiagnosticTask):

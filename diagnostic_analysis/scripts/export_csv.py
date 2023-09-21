@@ -36,15 +36,13 @@
 
 # \brief Converts diagnostics log files into CSV's for analysis
 
-PKG = 'diagnostic_analysis'
-import roslib; roslib.load_manifest(PKG)
-import diagnostic_msgs.msg
-import time, sys, os
-import operator, tempfile, subprocess
-
-from optparse import OptionParser
-
+import os
+import roslib
 from diagnostic_analysis.exporter import LogExporter
+from optparse import OptionParser
+PKG = 'diagnostic_analysis'
+roslib.load_manifest(PKG)
+
 
 if __name__ == '__main__':
     # Allow user to set output directory

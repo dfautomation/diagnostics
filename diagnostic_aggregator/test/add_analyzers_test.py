@@ -33,9 +33,9 @@
 #
 
 import unittest
-import rospy, rostest
+import rospy
+import rostest
 import rosparam
-import optparse
 import sys
 import threading
 from bondpy import bondpy

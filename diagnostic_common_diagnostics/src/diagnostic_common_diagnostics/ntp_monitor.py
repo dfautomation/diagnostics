@@ -33,7 +33,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import roslib
-roslib.load_manifest('diagnostic_common_diagnostics')
 import rospy
 import diagnostic_updater as DIAG
 
@@ -41,8 +40,8 @@ import sys
 import threading
 import socket
 from subprocess import Popen, PIPE
-import time
 import re
+roslib.load_manifest('diagnostic_common_diagnostics')
 
 
 def ntp_diag(st, host, off, error_offset):

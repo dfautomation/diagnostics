@@ -38,14 +38,13 @@
 # Make any csv into sparse csv
 
 
-PKG = 'diagnostic_analysis'
+import sys
+from diagnostic_analysis.sparse import make_sparse_skip, make_sparse_length
+from optparse import OptionParser
 import roslib
+PKG = 'diagnostic_analysis'
 roslib.load_manifest(PKG)
 
-import csv, os, sys
-from optparse import OptionParser
-
-from diagnostic_analysis.sparse import make_sparse_skip, make_sparse_length
 
 if __name__ == '__main__':
     # Allow user to set output directory

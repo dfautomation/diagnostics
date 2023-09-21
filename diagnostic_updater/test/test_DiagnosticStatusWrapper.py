@@ -5,11 +5,10 @@
 @author Brice Rebsamen <brice [dot] rebsamen [gmail]>
 """
 
+import unittest
+from diagnostic_updater import DiagnosticStatus, DiagnosticStatusWrapper
 import roslib
 roslib.load_manifest('diagnostic_updater')
-import rospy
-from diagnostic_updater import *
-import unittest
 
 
 class TestDiagnosticStatusWrapper(unittest.TestCase):

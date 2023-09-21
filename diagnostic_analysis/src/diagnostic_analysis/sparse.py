@@ -35,11 +35,11 @@
 # \author Kevin Watts
 # \brief Make CSV files smaller for use in spreadsheet software
 
-PKG = 'diagnostic_analysis'
+import csv
 import roslib
+PKG = 'diagnostic_analysis'
 roslib.load_manifest(PKG)
 
-import csv, os, sys
 
 # \brief Makes sparse CSV by skipping every nth value
 # \param csv_file str : CSV filename

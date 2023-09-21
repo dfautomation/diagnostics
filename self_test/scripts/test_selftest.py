@@ -35,18 +35,18 @@
 # \author Kevin Watts
 # \brief Tests for valid self test calls
 
+import rostest
+import rospy
+import roslib
+from diagnostic_msgs.srv import SelfTest
+from optparse import OptionParser
+import sys
+import unittest
 PKG = 'self_test'
-import roslib; roslib.load_manifest(PKG)
+roslib.load_manifest(PKG)
 
 SRV_NAME = 'my_node/self_test'
 
-import unittest
-import rospy, rostest
-
-import sys
-from optparse import OptionParser
-
-from diagnostic_msgs.srv import SelfTest, SelfTestRequest, SelfTestResponse
 
 class TestSelfTest(unittest.TestCase):
     def __init__(self, *args):

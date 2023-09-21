@@ -45,7 +45,8 @@ try:
 except ImportError:
     import http.client as httplib
 
-from ._diagnostic_status_wrapper import *
+from ._diagnostic_status_wrapper import DiagnosticStatusWrapper
+
 
 class DiagnosticTask:
     """DiagnosticTask is an abstract base class for collecting diagnostic data.
