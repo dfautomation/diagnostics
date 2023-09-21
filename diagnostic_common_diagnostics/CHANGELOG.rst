@@ -2,6 +2,43 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.11.0 (2021-12-31)
+-------------------
+* Added ram monitor (`#222 <https://github.com/ros/diagnostics/issues/222>`_)
+* Improve sensor output processing in sensors_monitor.py (`#223 <https://github.com/ros/diagnostics/issues/223>`_)
+* Decode bytes into string in ntp_monitor (`#220 <https://github.com/ros/diagnostics/issues/220>`_)
+  Co-authored-by: Maxime Noizet <maxime.noizet@etu.utc.fr>
+* Add missing lm-sensors dependency for sensors_monitor.py (`#198 <https://github.com/ros/diagnostics/issues/198>`_)
+  Co-authored-by: Vincent Rousseau <vincent.rousseau@sabi-agri.com>
+* Contributors: Noizet Maxime, Rousseau Vincent, chrisflesher
+
+1.10.4 (2021-03-14)
+-------------------
+* Port diagnostic common diagnostics to python 3
+* fix(cpu_monitor): Exception on shutdown (`#186 <https://github.com/ros/diagnostics/issues/186>`_)
+  Catch sigint properly
+* Contributors: Rein Appeldoorn, gemignani
+
+1.10.3 (2020-12-05)
+-------------------
+* Update maintainer info
+* Contributors: gemignani
+
+1.10.2 (2020-09-03)
+-------------------
+
+1.10.1 (2020-08-20)
+-------------------
+* Fix minor issues
+* Fix shebang line for python3 (`#141 <https://github.com/ros/diagnostics/issues/141>`_)
+* Contributors: Mikael Arguedas, gemignani
+
+1.10.0 (2020-08-11)
+-------------------
+* Add feature of window avereging for cpu monitor (`#153 <https://github.com/ros/diagnostics/issues/153>`_)
+* Make Guglielmo Gemignani ROS1 maintainer (`#155 <https://github.com/ros/diagnostics/issues/155>`_)
+* Contributors: Guglielmo Gemignani, Rein Appeldoorn, gemignani
+
 1.9.9 (2023-09-18)
 ------------------
 * Update dependency for python3.
@@ -24,8 +61,10 @@ Changelog for package diagnostic_common_diagnostics
 1.9.5 (2020-04-30)
 ------------------
 
-1.9.4 (2019-02-17)
+1.9.4 (2020-04-01)
 ------------------
+* noetic release (`#136 <https://github.com/ros/diagnostics/issues/136>`_)
+* Contributors: Alejandro Hernández Cordero
 
 1.9.3 (2018-05-02)
 ------------------

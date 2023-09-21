@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 #
 # Software License Agreement (BSD License)
 #
-# Copyright (c) 2008, Willow Garage, Inc.
+# Copyright (c) 2017, TNO IVS, Helmond, Netherlands
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -15,7 +15,7 @@
 #    copyright notice, this list of conditions and the following
 #    disclaimer in the documentation and/or other materials provided
 #    with the distribution.
-#  * Neither the name of the Willow Garage nor the names of its
+#  * Neither the name of the TNO IVS nor the names of its
 #    contributors may be used to endorse or promote products derived
 #    from this software without specific prior written permission.
 #
@@ -32,44 +32,34 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# \author Eric Berger, Kevin Watts
+# \author Rein Appeldoorn
 
-# \brief Converts diagnostics log files into CSV's for analysis
 
-import os
-import roslib
-from diagnostic_analysis.exporter import LogExporter
-from optparse import OptionParser
-PKG = 'diagnostic_analysis'
-roslib.load_manifest(PKG)
+import sys
+from argparse import ArgumentParser
+
+
+class PSUtilMockVirtualMemory:
+
+    def __init__(self, percent):
+        self.percent = percent
+
+
+class PSUtilMock:
+    RAM_PERCENTAGE = 0
+
+    @staticmethod
+    def virtual_memory():
+        return PSUtilMockVirtualMemory(PSUtilMock.RAM_PERCENTAGE)
 
 
 if __name__ == '__main__':
-    # Allow user to set output directory
-    parser = OptionParser()
-    parser.add_option("-d", "--directory", dest="directory",
-                      help="Write output to DIR/output. Default: %s" % PKG, metavar="DIR",
-                      default=roslib.packages.get_pkg_dir(PKG), action="store")
-    options, args = parser.parse_args()
+    parser = ArgumentParser()
+    parser.add_argument('--percentage', default=50, type=int)
+    args = parser.parse_known_args()[0]
 
-    exporters = []
+    sys.modules['psutil'] = PSUtilMock
+    from diagnostic_common_diagnostics import ram_monitor
 
-    print('Output directory: %s/output' % options.directory)
-
-    try:
-        for i, f in enumerate(args):
-            filepath = 'output/%s_csv' % os.path.basename(f)[0:os.path.basename(f).find('.')]
-
-            output_dir = os.path.join(options.directory, filepath)
-            print("Processing file %s. File %d of %d." % (os.path.basename(f), i + 1, len(args)))
-
-            exp = LogExporter(output_dir, f)
-            exp.process_log()
-            exp.finish_logfile()
-            exporters.append(exp)
-
-        print('Finished processing files.')
-    except Exception:
-        import traceback
-        print("Caught exception processing log file")
-        traceback.print_exc()
+    PSUtilMock.RAM_PERCENTAGE = args.percentage
+    ram_monitor.main()

@@ -144,7 +144,7 @@ int main(int argc, char **argv)
 
   // Diagnostic tasks are added to the Updater. They will later be run when
   // the updater decides to update. The add method is heavily overloaded
-  // for convenienc. Check doxygen for the full list of add methods.
+  // for convenience. Check doxygen for the full list of add methods.
   updater.add("Function updater", dummy_diagnostic);
   DummyClass dc;
   updater.add("Method updater", &dc, &DummyClass::produce_diagnostics);
@@ -160,9 +160,9 @@ int main(int argc, char **argv)
   // a function. This will be useful when combining multiple diagnostic
   // tasks using a CompositeDiagnosticTask.
   diagnostic_updater::FunctionDiagnosticTask lower("Lower-bound check",
-      boost::bind(&check_lower_bound, _1));
+      boost::bind(&check_lower_bound, boost::placeholders::_1));
   diagnostic_updater::FunctionDiagnosticTask upper("Upper-bound check",
-      boost::bind(&check_upper_bound, _1));
+      boost::bind(&check_upper_bound, boost::placeholders::_1));
 
   // If you want to merge the outputs of two diagnostic tasks together, you
   // can create a CompositeDiagnosticTask, also a derived class from

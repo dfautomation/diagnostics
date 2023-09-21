@@ -223,7 +223,11 @@ void Aggregator::publishData()
       min_level = processed[i]->level;
   }
 
-  vector<boost::shared_ptr<diagnostic_msgs::DiagnosticStatus> > processed_other = other_analyzer_->report();
+  vector<boost::shared_ptr<diagnostic_msgs::DiagnosticStatus> > processed_other; 
+  {
+    boost::mutex::scoped_lock lock(mutex_);
+    processed_other = other_analyzer_->report();
+  }
   for (unsigned int i = 0; i < processed_other.size(); ++i)
   {
     diag_array.status.push_back(*processed_other[i]);
@@ -239,8 +243,8 @@ void Aggregator::publishData()
   agg_pub_.publish(diag_array);
 
   // Top level is error if we have stale items, unless all stale
-  if (diag_toplevel_state.level > 2 && min_level <= 2)
-    diag_toplevel_state.level = 2;
+  if (diag_toplevel_state.level > int(DiagnosticLevel::Level_Error) && min_level <= int(DiagnosticLevel::Level_Error))
+    diag_toplevel_state.level = DiagnosticLevel::Level_Error;
 
   toplevel_state_pub_.publish(diag_toplevel_state);
 }

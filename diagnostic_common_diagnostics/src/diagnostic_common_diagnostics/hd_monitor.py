@@ -107,7 +107,7 @@ def update_status_stale(stat, last_update_time):
     time_since_update = rospy.get_time() - last_update_time
 
     stale_status = 'OK'
-    if time_since_update > 20 and time_since_update <= 35:
+    if 20 < time_since_update <= 35:
         stale_status = 'Lagging'
         if stat.level == DiagnosticStatus.OK:
             stat.message = stale_status
@@ -365,6 +365,7 @@ if __name__ == '__main__':
         pass
     except Exception as e:
         traceback.print_exc()
+        raise e
 
     hd_monitor.cancel_timers()
     sys.exit(0)

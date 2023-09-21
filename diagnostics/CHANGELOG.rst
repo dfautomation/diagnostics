@@ -2,6 +2,28 @@
 Changelog for package diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.11.0 (2021-12-31)
+-------------------
+
+1.10.4 (2021-03-14)
+-------------------
+
+1.10.3 (2020-12-05)
+-------------------
+* Update maintainer info
+* Contributors: gemignani
+
+1.10.2 (2020-09-03)
+-------------------
+
+1.10.1 (2020-08-20)
+-------------------
+
+1.10.0 (2020-08-11)
+-------------------
+* Make Guglielmo Gemignani ROS1 maintainer (`#155 <https://github.com/ros/diagnostics/issues/155>`_)
+* Contributors: Guglielmo Gemignani
+
 1.9.9 (2023-09-18)
 ------------------
 
@@ -17,8 +39,10 @@ Changelog for package diagnostics
 1.9.5 (2020-04-30)
 ------------------
 
-1.9.4 (2019-02-17)
+1.9.4 (2020-04-01)
 ------------------
+* noetic release (`#136 <https://github.com/ros/diagnostics/issues/136>`_)
+* Contributors: Alejandro Hernández Cordero
 
 1.9.3 (2018-05-02)
 ------------------

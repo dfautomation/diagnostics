@@ -2,6 +2,52 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.11.0 (2021-12-31)
+-------------------
+* Use DiagnosticLevel enum instead of hardcoded integers (`#208 <https://github.com/ros/diagnostics/issues/208>`_)
+  Spellcheck fixes
+* Contributors: Amilcar Lucas
+
+1.10.4 (2021-03-14)
+-------------------
+* Fix some doc typos and remove travis config (`#173 <https://github.com/ros/diagnostics/issues/173>`_)
+  * cleate -> create
+  * single single -> single
+  * remove travis config
+* Contributors: Mikael Arguedas
+
+1.10.3 (2020-12-05)
+-------------------
+* Use get_param_cached in diagnostic_updater
+* Diagnostic status msg is not included but being used (`#163 <https://github.com/ros/diagnostics/issues/163>`_)
+  * Diagnostic status msg is not included but being used
+  * Update update_functions.h
+* Change depends to catkin_depends for catkin packages (`#162 <https://github.com/ros/diagnostics/issues/162>`_)
+  * Change depends to catkin_depends for catkin packages
+  * The library also depends on catkin_libs
+* Update maintainer info
+* Contributors: Tobias Fischer, gemignani
+
+1.10.2 (2020-09-03)
+-------------------
+* Estract TimestampStatus run to cpp
+* Contributors: Guglielmo Gemignani
+
+1.10.1 (2020-08-20)
+-------------------
+* Resolve div by zero in updater (`#108 <https://github.com/ros/diagnostics/issues/108>`_)
+* Use std::isfinite due to deprecation on osx (`#113 <https://github.com/ros/diagnostics/issues/113>`_)
+* Remove extra (not needed) trailing ':' (`#116 <https://github.com/ros/diagnostics/issues/116>`_)
+* Fix GCC warnings with -Wpedantic (`#124 <https://github.com/ros/diagnostics/issues/124>`_)
+* Add SlowTimeStampStatus (`#144 <https://github.com/ros/diagnostics/issues/144>`_)
+* Contributors: Enrique Fernandez Perdomo, Jacob Perron, Martin Pecka, Stephan Sundermann, William Hudgins, gemignani
+
+1.10.0 (2020-08-11)
+-------------------
+* Make Guglielmo Gemignani ROS1 maintainer (`#155 <https://github.com/ros/diagnostics/issues/155>`_)
+* Test build fix on Windows build. (`#8 <https://github.com/ros/diagnostics/issues/8>`_) (`#138 <https://github.com/ros/diagnostics/issues/138>`_)
+* Contributors: Guglielmo Gemignani, Sean Yen
+
 1.9.9 (2023-09-18)
 ------------------
 
@@ -42,10 +88,18 @@ Changelog for package diagnostic_updater
 * windows bringup
 * Contributors: Austin, James Xu, Mike Purvis, Patrick Chin, Sean Yen
 
-1.9.4 (2019-02-17)
+1.9.4 (2020-04-01)
 ------------------
-* Compress the diagnostic entries from TimeStampStatus.
-* Compress the diagnostic entries from FrequencyStatus.
+* noetic release (`#136 <https://github.com/ros/diagnostics/issues/136>`_)
+* Merge pull request `#105 <https://github.com/ros/diagnostics/issues/105>`_ from mikepurvis/py3-httplib
+  Fix httplib import for Python 3.
+* Fix httplib import for Python 3.
+* Merge pull request `#97 <https://github.com/ros/diagnostics/issues/97>`_ from kejxu/fix_windows_build_issue
+  fix windows build issue
+* Merge branch 'indigo-devel' into fix_windows_build_issue
+* update windows bringup (`#5 <https://github.com/ros/diagnostics/issues/5>`_)
+* avoid ERROR from windows.h
+* windows bringup
 * Merge pull request `#86 <https://github.com/ros/diagnostics/issues/86>`_ from icolwell/diagnostic_status_custom_names
   Custom names for FrequencyStatus and TimeStampStatus
 * Remove C++11 features
@@ -53,7 +107,8 @@ Changelog for package diagnostic_updater
 * Custom names for existing diagnostics tasks
 * Merge pull request `#84 <https://github.com/ros/diagnostics/issues/84>`_ from nbussas/frequency_status_name
   Make FrequencyStatus' name configurable
-* Contributors: Austin, Ian Colwell, Nils Bussas, Patrick Chin
+* Make FrequencyStatus' name configurable
+* Contributors: Alejandro Hernández Cordero, Austin, Ian Colwell, James Xu, Mike Purvis, Nils Bussas, Sean Yen
 
 1.9.3 (2018-05-02)
 ------------------

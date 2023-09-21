@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 #
 # Software License Agreement (BSD License)
 #
-# Copyright (c) 2008, Willow Garage, Inc.
+# Copyright (c) 2017, TNO IVS, Helmond, Netherlands
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -15,7 +15,7 @@
 #    copyright notice, this list of conditions and the following
 #    disclaimer in the documentation and/or other materials provided
 #    with the distribution.
-#  * Neither the name of the Willow Garage nor the names of its
+#  * Neither the name of the TNO IVS nor the names of its
 #    contributors may be used to endorse or promote products derived
 #    from this software without specific prior written permission.
 #
@@ -32,44 +32,46 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# \author Eric Berger, Kevin Watts
-
-# \brief Converts diagnostics log files into CSV's for analysis
-
-import os
-import roslib
-from diagnostic_analysis.exporter import LogExporter
-from optparse import OptionParser
-PKG = 'diagnostic_analysis'
-roslib.load_manifest(PKG)
+# \author Rein Appeldoorn
 
 
+import unittest
+import rospy
+import rostest
+from diagnostic_msgs.msg import DiagnosticArray
+
+
+class TestRamMonitor(unittest.TestCase):
+
+    def diagnostics_callback(self, msg):
+        self._msg = msg
+
+    def test_ram_monitor_diagnostics(self):
+        rospy.init_node('test_ram_monitor')
+        self._expected_level = None
+        if rospy.has_param('~expected_level'):
+            self._expected_level = rospy.get_param('~expected_level')
+
+        self._subscriber = rospy.Subscriber('diagnostics', DiagnosticArray, self.diagnostics_callback)
+        self._msg = None
+
+        while not self._msg:
+            rospy.sleep(.1)
+        self._subscriber.unregister()
+
+        self.assertEqual(len(self._msg.status), 1)
+        status = self._msg.status[0]
+
+        for v in status.values:
+            percentage = float(v.value)
+            self.assertGreaterEqual(percentage, 0)
+            self.assertLessEqual(percentage, 100)
+
+        if self._expected_level:
+            self.assertEqual(self._expected_level, status.level)
+
+
+PKG = 'diagnostics_common_diagnostics'
+NAME = 'test_ram_monitor'
 if __name__ == '__main__':
-    # Allow user to set output directory
-    parser = OptionParser()
-    parser.add_option("-d", "--directory", dest="directory",
-                      help="Write output to DIR/output. Default: %s" % PKG, metavar="DIR",
-                      default=roslib.packages.get_pkg_dir(PKG), action="store")
-    options, args = parser.parse_args()
-
-    exporters = []
-
-    print('Output directory: %s/output' % options.directory)
-
-    try:
-        for i, f in enumerate(args):
-            filepath = 'output/%s_csv' % os.path.basename(f)[0:os.path.basename(f).find('.')]
-
-            output_dir = os.path.join(options.directory, filepath)
-            print("Processing file %s. File %d of %d." % (os.path.basename(f), i + 1, len(args)))
-
-            exp = LogExporter(output_dir, f)
-            exp.process_log()
-            exp.finish_logfile()
-            exporters.append(exp)
-
-        print('Finished processing files.')
-    except Exception:
-        import traceback
-        print("Caught exception processing log file")
-        traceback.print_exc()
+    rostest.unitrun(PKG, NAME, TestRamMonitor)

@@ -58,6 +58,10 @@ class Sensor(object):
         self.high = None
         self.alarm = None
 
+    def __repr__(self):
+        return 'Sensor object (name: {}, type: {})'.format(self.name,
+                                                           self.type)
+
     def getCrit(self):
         return self.critical
 
@@ -105,11 +109,10 @@ def parse_sensor_line(line):
     line = line.lstrip()
     [name, reading] = line.split(":")
 
-    # hack for when the name is temp1
-    if name.find("temp") != -1:
-        return None
-    else:
+    try:
         [sensor.name, sensor.type] = name.rsplit(" ", 1)
+    except ValueError:
+        return None
 
     if sensor.name == "Core":
         sensor.name = name
@@ -118,16 +121,19 @@ def parse_sensor_line(line):
         sensor.name = name
         sensor.type = "Temperature"
 
-    [reading, params] = reading.lstrip().split("(")
+    try:
+        [reading, params] = reading.lstrip().split("(")
+    except ValueError:
+        return None
 
     sensor.alarm = False
     if line.find("ALARM") != -1:
         sensor.alarm = True
 
-    if reading.find("\xc2\xb0C") == -1:
+    if reading.find("°C") == -1:
         sensor.input = float(reading.split()[0])
     else:
-        sensor.input = float(reading.split("\xc2\xb0C")[0])
+        sensor.input = float(reading.split("°C")[0])
 
     params = params.split(",")
     for param in params:

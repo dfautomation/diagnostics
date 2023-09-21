@@ -1,5 +1,5 @@
 # http://ros.org/doc/groovy/api/catkin/html/user_guide/supposed.html
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(diagnostic_aggregator)
 
 # Load catkin and all dependencies required for this package
@@ -65,6 +65,9 @@ catkin_install_python(
 )
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+install(DIRECTORY demo
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 install(FILES analyzer_plugins.xml
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}

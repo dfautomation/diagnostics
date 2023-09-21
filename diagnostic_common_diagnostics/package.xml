@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>diagnostic_common_diagnostics</name>
-  <version>1.9.9</version>
+  <version>1.11.0</version>
   <description>diagnostic_common_diagnostics</description>
   <author email="brice.rebsamen@gmail.com">Brice Rebsamen</author>
   <maintainer email="guglielmo.gemignani@gmail.com">Guglielmo Gemignani</maintainer>
@@ -19,6 +19,7 @@
 
   <exec_depend>diagnostic_updater</exec_depend>
   <exec_depend>hddtemp</exec_depend>
+  <exec_depend>lm-sensors</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend condition="$ROS_PYTHON_VERSION == 2">python-psutil</exec_depend>
