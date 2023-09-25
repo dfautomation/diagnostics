@@ -2,6 +2,11 @@
 Changelog for package diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+* Contributors: Farhan Mustar
+
 1.11.0 (2021-12-31)
 -------------------
 

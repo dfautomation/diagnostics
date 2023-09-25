@@ -2,6 +2,14 @@
 Changelog for package self_test
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+* Rearrange imports.
+* Run autoformat.
+* Cherry pick from ros/noetic-devel for python3 update.
+* Contributors: Farhan Mustar
+
 1.11.0 (2021-12-31)
 -------------------
 

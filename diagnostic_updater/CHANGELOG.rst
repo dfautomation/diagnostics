@@ -2,6 +2,14 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+* Rearrange imports.
+* Run autoformat.
+* Cherry pick from ros/noetic-devel for python3 update.
+* Contributors: Farhan Mustar
+
 1.11.0 (2021-12-31)
 -------------------
 * Use DiagnosticLevel enum instead of hardcoded integers (`#208 <https://github.com/ros/diagnostics/issues/208>`_)
