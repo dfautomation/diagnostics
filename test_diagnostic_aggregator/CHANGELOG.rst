@@ -2,8 +2,8 @@
 Changelog for package test_diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.1 (2023-09-25)
+-------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
 * Rearrange imports.
 * Run autoformat.
