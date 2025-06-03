@@ -2,12 +2,18 @@
 Changelog for package test_diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+
+  * Switch to hpp headers of pluginlib (`#230 <https://github.com/ros/diagnostics/issues/230>`_)
+
 * Rearrange imports.
 * Run autoformat.
-* Contributors: Farhan Mustar
+* Contributors: Farhan Mustar, Jochen Sprickerhof
 
 1.11.0 (2021-12-31)
 -------------------

@@ -2,13 +2,19 @@
 Changelog for package self_test
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+
+  * Switch to new boost/bind/bind.hpp (`#224 <https://github.com/ros/diagnostics/issues/224>`_)
+
 * Rearrange imports.
 * Run autoformat.
 * Cherry pick from ros/noetic-devel for python3 update.
-* Contributors: Farhan Mustar
+* Contributors: Farhan Mustar, Jochen Sprickerhof
 
 1.11.0 (2021-12-31)
 -------------------

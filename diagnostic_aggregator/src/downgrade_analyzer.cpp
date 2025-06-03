@@ -1,7 +1,7 @@
 /*********************************************************************
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2009, Willow Garage, Inc.
+ *  Copyright (c) 2010, Willow Garage, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -32,35 +32,31 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-/**< \author Kevin Watts */
+/**< \author Tim Clephas */
 
-#include <diagnostic_aggregator/aggregator.h>
-#include <exception>
+#include "diagnostic_aggregator/downgrade_analyzer.h"
 
+
+using namespace diagnostic_aggregator;
 using namespace std;
 
-int main(int argc, char **argv)
+PLUGINLIB_EXPORT_CLASS(diagnostic_aggregator::DowngradeAnalyzer,
+                       diagnostic_aggregator::Analyzer)
+
+
+DowngradeAnalyzer::DowngradeAnalyzer() { }
+
+DowngradeAnalyzer::~DowngradeAnalyzer() { }
+
+vector<boost::shared_ptr<diagnostic_msgs::DiagnosticStatus> > DowngradeAnalyzer::report()
 {
-  ros::init(argc, argv, "diagnostic_aggregator");
-  
-  try
+  vector<boost::shared_ptr<diagnostic_msgs::DiagnosticStatus> > processed;
+  processed = GenericAnalyzer::report();
+
+  for (unsigned int j = 0; j < processed.size(); ++j)
   {
-  diagnostic_aggregator::Aggregator agg;
-  
-  ros::Rate pub_rate(agg.getPubRate());
-  while (agg.ok())
-  {
-    ros::spinOnce();
-    agg.publishData();
-    pub_rate.sleep();
+    processed[j]->level = diagnostic_msgs::DiagnosticStatus::OK;
   }
-  }
-  catch (exception& e)
-  {
-    ROS_FATAL("Diagnostic aggregator node caught exception. Aborting. %s", e.what());
-    ROS_BREAK();
-  }
-  
-  exit(0);
+
+  return processed;
 }
-  

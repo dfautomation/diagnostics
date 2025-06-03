@@ -2,13 +2,19 @@
 Changelog for package diagnostic_analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+
+  * Fix python3 shebang for diagnostic_analysis (`#241 <https://github.com/ros/diagnostics/issues/241>`_)
+
 * Rearrange imports.
 * Run autoformat.
 * Cherry pick from ros/noetic-devel for python3 update.
-* Contributors: Farhan Mustar
+* Contributors: Farhan Mustar, SubaruArai
 
 1.11.0 (2021-12-31)
 -------------------

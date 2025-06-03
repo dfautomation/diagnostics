@@ -2,13 +2,25 @@
 Changelog for package diagnostic_updater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+
+  * diagnostic_updater: Added documentation of the Python interface. (`#399 <https://github.com/ros/diagnostics/issues/399>`_)
+    * diagnostic_updater: Added documentation of the Python interface.
+    * diagnostic_updater: Added link to Python docs from the C++ docs.
+    ---------
+  * Fix diagnostics Updater constructor NodeHandle documentation (`#234 <https://github.com/ros/diagnostics/issues/234>`_)
+    Previously the documentation mistakenly stated the argument `h` was used for getting the `diagnostic_period` parameter. I fixed the documentation.
+  * Switch to new boost/bind/bind.hpp (`#224 <https://github.com/ros/diagnostics/issues/224>`_)
+
 * Rearrange imports.
 * Run autoformat.
 * Cherry pick from ros/noetic-devel for python3 update.
-* Contributors: Farhan Mustar
+* Contributors: Farhan Mustar, Jacob Seibert, Jochen Sprickerhof, Martin Pecka
 
 1.11.0 (2021-12-31)
 -------------------

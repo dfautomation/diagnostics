@@ -2,6 +2,9 @@
 Changelog for package diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel

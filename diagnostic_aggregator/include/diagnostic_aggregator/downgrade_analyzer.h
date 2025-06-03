@@ -1,7 +1,7 @@
 /*********************************************************************
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2009, Willow Garage, Inc.
+ *  Copyright (c) 2010, Willow Garage, Inc.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -32,35 +32,52 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-/**< \author Kevin Watts */
+/*!
+ * \author Tim Clephas
+ */
 
-#include <diagnostic_aggregator/aggregator.h>
-#include <exception>
+#ifndef DIAGNOSTIC_AGGREGATOR_DOWNGRADE_ANALYZER_H
+#define DIAGNOSTIC_AGGREGATOR_DOWNGRADE_ANALYZER_H
 
-using namespace std;
+#include "diagnostic_aggregator/generic_analyzer.h"
+#include <vector>
+#include <string>
+#include <boost/shared_ptr.hpp>
+#include <diagnostic_msgs/DiagnosticStatus.h>
+#include <ros/ros.h>
 
-int main(int argc, char **argv)
+namespace diagnostic_aggregator {
+
+/*!
+ *\brief DowngradeAnalyzer downgrades all analyzer parameters and does nothing
+ *
+ * DowngradeAnalyzer is used to get rid of an Analyzer that is no longer part of a robot configuration.
+ *
+ *\verbatim
+ *<launch>
+ *  <include file="$(find my_pkg)/my_analyzers.launch" />
+ *
+ *  <!-- Overwrite a specific Analyzer to discard all -->
+ *  <param name="diag_agg/analyzers/motors/type" value="DowngradeAnalyzer" />
+ *</launch>
+ *\endverbatim
+ *
+ *
+ */
+class DowngradeAnalyzer : public GenericAnalyzer
 {
-  ros::init(argc, argv, "diagnostic_aggregator");
-  
-  try
-  {
-  diagnostic_aggregator::Aggregator agg;
-  
-  ros::Rate pub_rate(agg.getPubRate());
-  while (agg.ok())
-  {
-    ros::spinOnce();
-    agg.publishData();
-    pub_rate.sleep();
-  }
-  }
-  catch (exception& e)
-  {
-    ROS_FATAL("Diagnostic aggregator node caught exception. Aborting. %s", e.what());
-    ROS_BREAK();
-  }
-  
-  exit(0);
+public:
+  /*!
+   *\brief Default constructor loaded by pluginlib
+   */
+  DowngradeAnalyzer();
+
+  virtual ~DowngradeAnalyzer();
+/*
+   *\brief Generate report using generic analyser but always report OK
+   */
+  virtual std::vector<boost::shared_ptr<diagnostic_msgs::DiagnosticStatus> > report();
+};
+
 }
-  
+#endif // DIAGNOSTIC_AGGREGATOR_DOWNGRADE_ANALYZER_H

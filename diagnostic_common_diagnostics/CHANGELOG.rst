@@ -2,13 +2,26 @@
 Changelog for package diagnostic_common_diagnostics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.0 (2025-05-04)
+-------------------
+
 1.11.1 (2023-09-25)
 -------------------
 * Merge remote-tracking branch 'ros/noetic-devel' into noetic-devel
+
+  * Fix Python3 port of hd_monitor.py (`#231 <https://github.com/ros/diagnostics/issues/231>`_)
+    The data returned from a socket is `bytes`. So to properly deal with
+    this data we'd have to concatenate as bytes and decode to string at the
+    end.
+    The old (wrong) way of concatenating results in some stray `'b'`
+    characters showing up in the drive names.
+  * Diagnostic meesage requires a string instead of bytes (`#233 <https://github.com/ros/diagnostics/issues/233>`_)
+    Co-authored-by: sunfish <sunfish@stoneaerospace.com>
+
 * Rearrange imports.
 * Run autoformat.
 * Cherry pick from ros/noetic-devel for python3 update.
-* Contributors: Farhan Mustar
+* Contributors: Farhan Mustar, Ramon Wijnands, chrisflesher
 
 1.11.0 (2021-12-31)
 -------------------
