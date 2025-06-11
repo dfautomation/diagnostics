@@ -2,6 +2,9 @@
 Changelog for package diagnostic_aggregator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.12.2 (2025-06-11)
+-------------------
+
 1.12.0 (2025-05-04)
 -------------------
 * Add DowngradeAnalyser for reporting non-critical errors (`#126 <https://github.com/ros/diagnostics/issues/126>`_)
