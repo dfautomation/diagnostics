@@ -333,16 +333,7 @@ class Updater(DiagnosticTaskVector):
         # This is not available in rospy. Hence I throttle the call to the
         # parameter server using a standard timeout mechanism (4Hz)
 
-        now = rospy.Time.now()
-        if  now >= self.last_time_period_checked + rospy.Duration(0.25):
-            try:
-                if hasattr(rospy, 'get_param_cached'):
-                    self.period = rospy.get_param_cached("~diagnostic_period", 1)
-                else:
-                    self.period = rospy.get_param("~diagnostic_period", 1)
-                self.last_time_period_checked = now
-            except (httplib.CannotSendRequest, httplib.ResponseNotReady):
-                pass
+        pass
 
     def publish(self, msg):
         """Publishes a single diagnostic status or a vector of diagnostic statuses."""
